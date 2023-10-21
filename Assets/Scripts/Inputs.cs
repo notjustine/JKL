@@ -3,8 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Inputs : MonoBehaviour
- 
 {
+
+    public songManager songManager;
+
+    public GameObject capsule;
+    private Renderer capsuleRenderer;
+
+    private Color green = new Color(0, 0.65f, 0);
+    private Color red = new Color(0.5f, 0, 0);
+
     private Vector3 scaleChange;
     private bool comboMode;
   
@@ -16,11 +24,16 @@ public class Inputs : MonoBehaviour
     public GameObject MissedPrefab;
     public float AttackSpeed = 10;
 
-    public bool onBeat = false;
-    private bool attackOnce = false;
+    private bool onBeat = false;
+    //private bool attackOnce = false;
+    private bool attackable = true;
 
+    // delay between attacks
     [SerializeField] private float attackWindow;
-    
+
+    // delay for missing a beat
+    [SerializeField] private float missedDelay;
+
 
     private float tempPosition;
 
@@ -39,31 +52,64 @@ public class Inputs : MonoBehaviour
 
     void Start()
     {
+        
+        capsuleRenderer = capsule.GetComponent<Renderer>();
+        capsuleRenderer.material.SetColor("_Color", green);
+
         comboMode = false;
     }
 
     // Update is called once per frame
     void Update()
     {
+        onBeat = songManager.instance.isOnBeat;
+        //print(attackOnce);
+
         if(songManager.instance.gameState == true)
         {
-            canAttack();
+            //canAttack();
         }
         
-
+        //Attack logic
         if (comboMode == false)
         {
-            if (Input.GetKeyDown(KeyCode.J) && onBeat == true && attackOnce == false)
+            if (Input.GetKeyDown(KeyCode.J) && onBeat == true && attackable == true)
             {
                 createAttack();
-                attackOnce = true;
-            }
+                attackable = false;
+                capsuleRenderer.material.SetColor("_Color", green);
 
-            if (Input.GetKeyDown(KeyCode.J) && onBeat == false)
-            {
-                print("Missed the beat!");
-                createMissedAttack();
+                Invoke("attackAgain", attackWindow);
             }
+            else if (Input.GetKeyDown(KeyCode.J))
+            {
+                //print("Missed the beat!");
+                CancelInvoke();
+                createMissedAttack();
+                attackable = false;
+                capsuleRenderer.material.SetColor("_Color", red);
+
+                Invoke("attackAgain", missedDelay);
+            }
+            //else if (Input.GetKeyDown(KeyCode.J) && onBeat == false && attackable == true)
+            //{
+            //    //print("Missed the beat!");
+            //    createMissedAttack();
+            //    attackable = false;
+            //    capsuleRenderer.material.SetColor("_Color", red);
+
+            //    Invoke("attackAgain", missedDelay);
+            //}
+            //else if (Input.GetKeyDown(KeyCode.J) && attackable == false)
+            //{
+            //    CancelInvoke();
+
+            //    attackable = false;
+            //    capsuleRenderer.material.SetColor("_Color", red);
+
+            //    Invoke("attackAgain", missedDelay);
+            //}
+
 
             if (Input.GetKey(KeyCode.L))
             {
@@ -75,7 +121,7 @@ public class Inputs : MonoBehaviour
                 print("Combo Initiated!");
                 comboMode = true;
             }
-        }else if (comboMode == true)
+        } else if (comboMode == true)
         {
             // Correct key pressed!
             if (Input.GetKeyDown(KeyCodeSeries[keyCodeIndex]))
@@ -126,32 +172,38 @@ public class Inputs : MonoBehaviour
         Instantiate(MissedPrefab, MissedSpawnPoint.position, MissedSpawnPoint.rotation);
     }
 
+    void attackAgain()
+    {
+        attackable = true;
+        capsuleRenderer.material.SetColor("_Color", green);
+    }
+
     //Determines whether or not the user can fire an attack. They have to hit the note on beat to attack.
-    void canAttack()
-    {
-        if (tempPosition == 0)
-        {
-            tempPosition = songManager.instance.songPositionInBeats;
-            //Invoke("changeOnBeat", 0.5f);
+    //void canAttack()
+    //{
+    //    if (tempPosition == 0)
+    //    {
+    //        tempPosition = songManager.instance.songPositionInBeats;
+    //        //Invoke("changeOnBeat", 0.5f);
        
-        }
+    //    }
 
-        if (songManager.instance.songPositionInBeats - tempPosition >= attackWindow)
-        {
-            changeOnBeat();
-            //onBeat = true;
-            tempPosition = 0;
-            if(onBeat == true)
-            {
-                attackOnce = false;
-            }
-        }
-    }
+    //    if (songManager.instance.songPositionInBeats - tempPosition >= attackWindow)
+    //    {
+    //        //changeOnBeat();
+    //        //onBeat = true;
+    //        tempPosition = 0;
+    //        if(onBeat == true)
+    //        {
+    //            attackOnce = false;
+    //        }
+    //    }
+    //}
 
-    void changeOnBeat()
-    {
-        onBeat = !onBeat;
-        //onBeat = false;
+    //void changeOnBeat()
+    //{
+    //    onBeat = !onBeat;
+    //    //onBeat = false;
         
-    }
+    //}
 }

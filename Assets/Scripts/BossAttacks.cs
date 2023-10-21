@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class BossAttacks : MonoBehaviour
 {
-   
+    public songManager songManager;
+
     public Transform AttackSpawnPoint;
     public GameObject AttackPrefab;
     public float AttackSpeed = 10;
@@ -16,16 +17,18 @@ public class BossAttacks : MonoBehaviour
 
     private float tempPosition;
 
-    public AudioSource song;
-    public float bpm = 180;
+    //public AudioSource song;
 
-   
+    //public float bpm;
+
+
     private void Awake()
     {
-        songManager.instance.song = song;
-        songManager.instance.attacks = this;
-        songManager.instance.songBpm = bpm;
+        //songManager.instance.song = song;
+        //songManager.instance.attacks = this;
+        //songManager.instance.songBpm = bpm;
     }
+
     //on start, begin attacking at set intervals. 
     //the attackFrequency variable controls how many seconds each new attack is fired
     void Start()
@@ -37,7 +40,7 @@ public class BossAttacks : MonoBehaviour
 
     private void Update()
     {
-        if(songManager.instance.gameState == true)
+        if (songManager.instance.gameState == true)
         {
             attackTiming();
         }
@@ -56,6 +59,7 @@ public class BossAttacks : MonoBehaviour
             tempPosition = 0;
         }
     }
+
     public void createAttack()
     {
         var randomPosition = new Vector3(Random.Range(rangeXMin, rangeXMax), Random.Range(rangeYMin, rangeYMax), AttackSpawnPoint.position.z);

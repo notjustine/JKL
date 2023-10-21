@@ -4,32 +4,46 @@ using UnityEngine;
 
 public class attackIndicator : MonoBehaviour
 {
+    //private Inputs beatTracker;
 
-    public GameObject playerInput;
-    private Inputs beatTracker;
+    public songManager songManager;
+
+    public GameObject bar;
     private Renderer barRenderer;
 
-    private Color whenOnBeat;
-    private Color whenOffBeat;
+    private Color black = new Color(0, 0, 0);
+    private Color cyan = new Color(0, 1, 1);
 
     void Start()
     {
-        beatTracker = playerInput.GetComponent<Inputs>();
-        barRenderer = GetComponent<Renderer>();
-        whenOffBeat = Color.black;
-        whenOnBeat = Color.cyan;
+        //beatTracker = playerInput.GetComponent<Inputs>();
+
+        barRenderer = bar.GetComponent<Renderer>();
+
+        //whenOffBeat = Color.black;
+        //whenOnBeat = Color.cyan;
     }
 
 
     void Update()
     {
-        if(beatTracker.onBeat == false)
+
+        if (songManager.instance.isOnBeat)
         {
-            barRenderer.material.color = whenOffBeat;
+            barRenderer.material.SetColor("_Color", cyan);
         }
         else
         {
-            barRenderer.material.color = whenOnBeat;
+            barRenderer.material.SetColor("_Color", black);
         }
+
+        //if(beatTracker.onBeat == false)
+        //{
+        //    barRenderer.material.color = whenOffBeat;
+        //}
+        //else
+        //{
+        //    barRenderer.material.color = whenOnBeat;
+        //}
     }
 }
