@@ -14,6 +14,8 @@ public class attackIndicator : MonoBehaviour
     private Color black = new Color(0, 0, 0);
     private Color cyan = new Color(0, 1, 1);
 
+    private int songBeat;
+
     void Start()
     {
         //beatTracker = playerInput.GetComponent<Inputs>();
@@ -28,7 +30,18 @@ public class attackIndicator : MonoBehaviour
     void Update()
     {
 
-        if (songManager.instance.isOnBeat)
+        //if (songManager.instance.isOnBeat)
+        //{
+        //    barRenderer.material.SetColor("_Color", cyan);
+        //}
+        //else
+        //{
+        //    barRenderer.material.SetColor("_Color", black);
+        //}
+
+        songBeat = (int)songManager.instance.songPosWithOffset;
+
+        if (songBeat % 2 == 0)
         {
             barRenderer.material.SetColor("_Color", cyan);
         }

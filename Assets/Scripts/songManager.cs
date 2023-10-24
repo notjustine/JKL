@@ -4,34 +4,44 @@ using UnityEngine;
 
 public class songManager : MonoBehaviour
 {
-    public float songBpm;
+    //an AudioSource attached to this GameObject that will play the music.
+    public AudioSource song;
 
-    //Current song position, in seconds
-    public float songPositionInSec;
-
-    //Current song position, in beats
-    public float songPositionInBeats;
-
-    // song position (beats) in integer
-    public int beatCount = 0;
-
-    //The number of seconds for each song beat
-    private float secPerBeat;
+    [SerializeField]
+    private float songBpm;
 
     //How many seconds have passed since the song started
     private float dspSongTime;
 
-    // the offset to the first beat of the song in seconds
-    public float firstBeatOffset;
+    //Current song position, in seconds
+    private float songPositionInSec;
 
-    //Whether the song start time has been recorded or not.
+    //Current song position, in beats
+    [HideInInspector]
+    public float songPositionInBeats;
+
+    //The number of seconds for each song beat
+    private float secPerBeat;
+
+    // song position (beats) in integer
+    [SerializeField]
+    private int beatCount = 0;
+
+    // the offset to the first beat of the song in seconds
+    [SerializeField]
+    private float firstBeatOffset;
+
+    // slight delay for the attack indicator 
+    [HideInInspector]
+    public float songPosWithOffset;
+
+    //Whether the song start time has been recorded or not. 
     //Added to prevent the dspSongTime variable from being overwritten since it's in the update() loop
     private bool songStartRecorded = false;
     
-
-
     //Whether the game is on or off. If the game is on, boss music will play and the boss will start attacking.
-    [HideInInspector] public bool gameState = false;
+    [HideInInspector] 
+    public bool gameState = false;
 
     //Whether the song is playing or not. This prevents the song start command from looping.
     private bool songState = false;
@@ -39,10 +49,7 @@ public class songManager : MonoBehaviour
     public bool isOnBeat = false;
 
 
-    //an AudioSource attached to this GameObject that will play the music.
-    public AudioSource song;
-
-    [HideInInspector] public BossAttacks attacks;
+    //[HideInInspector] public BossAttacks attacks;
 
 
     //makes this script a singleton so its variables can be accessed easily in other scripts
@@ -69,6 +76,8 @@ public class songManager : MonoBehaviour
 
         //Calculate the number of seconds in each beat
         secPerBeat = 60f / songBpm;
+
+        song.Stop();
     }
 
     void Update()
@@ -83,7 +92,6 @@ public class songManager : MonoBehaviour
         //If game is started
         if (gameState == true)
         {
-
             //Start the music
             if (songState == false)
             {
@@ -99,10 +107,12 @@ public class songManager : MonoBehaviour
             }
             
             //Determine how many seconds since the song started
-            songPositionInSec = (float)(AudioSettings.dspTime - dspSongTime + firstBeatOffset);
+            songPositionInSec = (float)(AudioSettings.dspTime - dspSongTime);
+            songPosWithOffset = songPositionInSec + firstBeatOffset;
 
             //Determine how many beats since the song started
             songPositionInBeats = songPositionInSec / secPerBeat;
+            songPosWithOffset = songPosWithOffset / secPerBeat;
 
             //Convert song position into integer beats
             beatCount = (int)songPositionInBeats;
@@ -119,17 +129,23 @@ public class songManager : MonoBehaviour
         }
         else
         {
-            song.Pause();
+            //song.Pause();
+            songState = false;
+        }
+
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            Time.timeScale = 0;
         }
 
         //print(isOnBeat);
 
-        //Start the music
-        //if (gameState == true && songState == false)
-        //{
-        //    song.Play();
-        //    songState = true;
-        //}
+            //Start the music
+            //if (gameState == true && songState == false)
+            //{
+            //    song.Play();
+            //    songState = true;
+            //}
 
     }
    

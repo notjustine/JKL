@@ -1009,7 +1009,8 @@ MonoBehaviour:
   songPositionInSec: 0
   songPositionInBeats: 0
   beatCount: 0
-  firstBeatOffset: 0
+  firstBeatOffset: 0.2
+  songPositionWithOffset: 0
   gameState: 0
   isOnBeat: 0
   song: {fileID: 1036717795}
