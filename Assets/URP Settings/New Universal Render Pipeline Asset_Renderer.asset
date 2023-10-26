@@ -73,15 +73,15 @@ MonoBehaviour:
     m_Bits: 1088
   outlinesOccluderLayerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 951
   outlineSettings:
     outlineColor: {r: 0, g: 0, b: 0, a: 1}
-    outlineScale: 0.5
-    depthThreshold: 0.2
-    robertsCrossMultiplier: 100
-    normalThreshold: 0.4
-    steepAngleThreshold: 0.2
-    steepAngleMultiplier: 25
+    outlineScale: 0.6
+    depthThreshold: 17
+    robertsCrossMultiplier: 222
+    normalThreshold: 0.979
+    steepAngleThreshold: 0.19
+    steepAngleMultiplier: 18
   viewSpaceNormalsTextureSettings:
     colorFormat: 0
     depthBufferBits: 16
