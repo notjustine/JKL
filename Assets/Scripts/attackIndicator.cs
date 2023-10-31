@@ -43,11 +43,11 @@ public class attackIndicator : MonoBehaviour
 
         if (songBeat % 2 == 0)
         {
-            barRenderer.material.SetColor("_Color", cyan);
+            barRenderer.material.color = Color.cyan;
         }
         else
         {
-            barRenderer.material.SetColor("_Color", black);
+            barRenderer.material.color = Color.black;
         }
 
         //if(beatTracker.onBeat == false)
