@@ -4,19 +4,22 @@ using UnityEngine;
 
 public class Inputs_Lucy_Test : MonoBehaviour
 {
-
-    public songManager songManager;
-
     public GameObject theGameObject;
     private Renderer GORenderer;
 
     private Color green = new Color(0, 0.65f, 0);
     private Color red = new Color(0.5f, 0, 0);
 
-    private Vector3 scaleChange;
-    private bool comboMode;
+    [SerializeField] private bool comboMode;
   
-    public KeyCode[] KeyCodeSeries = new KeyCode[] { KeyCode.Alpha1, KeyCode.Alpha2, KeyCode.Alpha3 };
+    
+    public KeyCode[] Combo1 = new KeyCode[] { KeyCode.Alpha1, KeyCode.Alpha2, KeyCode.Alpha3 };
+    public KeyCode[] Combo2 = new KeyCode[] { KeyCode.Alpha1, KeyCode.Alpha2, KeyCode.Alpha3 };
+
+    public int Combo1Test = 0;
+    public int Combo2Test = 0;
+
+    public List<KeyCode> comboInputs = new List<KeyCode>();
 
     public Transform AttackSpawnPoint;
     public Transform MissedSpawnPoint;
@@ -26,16 +29,13 @@ public class Inputs_Lucy_Test : MonoBehaviour
 
     private bool onBeat = false;
     //private bool attackOnce = false;
-    private bool attackable = true;
+    [SerializeField] private bool attackable;
 
     // delay between attacks
     [SerializeField] private float attackWindow;
 
     // delay for missing a beat
     [SerializeField] private float missedDelay;
-
-
-    private float tempPosition;
 
 
     // Specify in the inspector the function you want to call
@@ -52,11 +52,17 @@ public class Inputs_Lucy_Test : MonoBehaviour
 
     void Start()
     {
-        
+        //GORenderer stuff was for the capsule to change materials.
+        //These related lines of code are currently not under use.
+        //However, there are plans for Lucy's model to flash red when taking damage and also
+        //Contain other visual cues when the attack cooldown is occuring due to a miss
+        //Leaving this bit of code in for now so that later we can come back to it and update it as needed
+
         GORenderer = theGameObject.GetComponent<Renderer>();
         //GORenderer.material.SetColor("_Color", green);
 
         comboMode = false;
+        attackable = true;
     }
 
     // Update is called once per frame
@@ -64,98 +70,93 @@ public class Inputs_Lucy_Test : MonoBehaviour
     {
         onBeat = songManager.instance.isOnBeat;
         //print(attackOnce);
-
-        if(songManager.instance.gameState == true)
-        {
-            //canAttack();
-        }
         
         //Attack logic
-        if (comboMode == false)
+        if(songManager.instance.gameState == true)
         {
-            if (Input.GetKeyDown(KeyCode.J) && onBeat == true && attackable == true)
+            if (comboMode == false)
             {
-                createAttack();
-                attackable = false;
-                //GORenderer.material.SetColor("_Color", green);
-
-                Invoke("attackAgain", attackWindow);
-            }
-            else if (Input.GetKeyDown(KeyCode.J))
-            {
-                //print("Missed the beat!");
-                CancelInvoke();
-                createMissedAttack();
-                attackable = false;
-                //GORenderer.material.SetColor("_Color", red);
-
-                Invoke("attackAgain", missedDelay);
-            }
-            //else if (Input.GetKeyDown(KeyCode.J) && onBeat == false && attackable == true)
-            //{
-            //    //print("Missed the beat!");
-            //    createMissedAttack();
-            //    attackable = false;
-            //    capsuleRenderer.material.SetColor("_Color", red);
-
-            //    Invoke("attackAgain", missedDelay);
-            //}
-            //else if (Input.GetKeyDown(KeyCode.J) && attackable == false)
-            //{
-            //    CancelInvoke();
-
-            //    attackable = false;
-            //    capsuleRenderer.material.SetColor("_Color", red);
-
-            //    Invoke("attackAgain", missedDelay);
-            //}
-
-
-            if (Input.GetKey(KeyCode.L))
-            {
-                //transform.localScale -= scaleChange;
-            }
-
-            if (Input.GetKey(KeyCode.K))
-            {
-                print("Combo Initiated!");
-                comboMode = true;
-            }
-        } else if (comboMode == true)
-        {
-            // Correct key pressed!
-            if (Input.GetKeyDown(KeyCodeSeries[keyCodeIndex]))
-            {
-                print(KeyCodeSeries[keyCodeIndex]);
-                keyCodeIndex++;
-
-                // Series completed!
-                if (keyCodeIndex >= KeyCodeSeries.Length)
+                if (Input.GetKeyDown(KeyCode.J) && onBeat == true && attackable == true)
                 {
-                    if (OnSeriesComplete != null)
-                        //OnSeriesComplete.Invoke();
-                        print("Combo Done!");
+                    createAttack();
+                    attackable = false;
+                    //GORenderer.material.SetColor("_Color", green);
 
-                    // Reset index to allow to start again
-                    keyCodeIndex = 0;
-                    comboMode = false;
+                    Invoke("attackAgain", attackWindow);
+                }
+                else if (Input.GetKeyDown(KeyCode.J))
+                {
+                    //print("Missed the beat!");
+                    CancelInvoke();
+                    createMissedAttack();
+                    attackable = false;
+                    //GORenderer.material.SetColor("_Color", red);
+
+                    Invoke("attackAgain", missedDelay);
+                }
+
+                if (Input.GetKey(KeyCode.L))
+                {
+                    
+                }
+
+                if (Input.GetKey(KeyCode.K))
+                {
+                    print("Combo Initiated!");
+                    comboMode = true;
                 }
             }
-            // Wrong key pressed!
-            else if (Input.anyKeyDown)
+            else if (comboMode == true)
             {
-                keyCodeIndex = 0;
-                if (OnSeriesFailed != null)
-                    //OnSeriesFailed.Invoke();
-                    print("Combo failed!");
-                comboMode = false;
+                //After pressing the combo key (K), if J, K, or L are pressed, they are added to the comboInputs list
+                //A list was used over an array because the array.push() method was having issues with KeyCodes
+                if (Input.GetKeyDown(KeyCode.J))
+                {
+                    comboInputs.Add(KeyCode.J);
+                    print("J");
+
+                    comboCheck();
+                }
+
+                if (Input.GetKeyDown(KeyCode.K))
+                {
+                    comboInputs.Add(KeyCode.K);
+                    print("K");
+
+                    comboCheck();
+                }
+
+                if (Input.GetKeyDown(KeyCode.L))
+                {
+                    comboInputs.Add(KeyCode.L);
+                    print("L");
+
+                    comboCheck();
+                }
+
+                //If the maximum number of inputs expected is reached (3), check for completed combos
+
+                if(comboInputs.Count == 3)
+                {
+                    if (Combo1Test == 3)
+                    {
+                        print("Combo 1 Completed Successfully!");
+                    }else if(Combo2Test == 3)
+                    {
+                        print("Combo 2 Completed Successfully!");
+                    }
+                    else
+                    {
+                        print("Combo Failed!");
+                    }
+                    comboInputs.Clear();
+                    Combo1Test = 0;
+                    Combo2Test = 0;
+                    //Added invoke command so that if a combo happens to end in 'K', it does not immediately initiate another combo
+                    Invoke("comboReset", 1);
+                }
             }
         }
-
-        // Make sure some keys have been specified in the inspector 
-        if (KeyCodeSeries.Length == 0)
-            return;
-
     }
 
     void createAttack()
@@ -175,35 +176,24 @@ public class Inputs_Lucy_Test : MonoBehaviour
     void attackAgain()
     {
         attackable = true;
-        //GORenderer.material.SetColor("_Color", green);
     }
 
-    //Determines whether or not the user can fire an attack. They have to hit the note on beat to attack.
-    //void canAttack()
-    //{
-    //    if (tempPosition == 0)
-    //    {
-    //        tempPosition = songManager.instance.songPositionInBeats;
-    //        //Invoke("changeOnBeat", 0.5f);
-       
-    //    }
+    void comboReset()
+    {
+        comboMode = false;
+    }
 
-    //    if (songManager.instance.songPositionInBeats - tempPosition >= attackWindow)
-    //    {
-    //        //changeOnBeat();
-    //        //onBeat = true;
-    //        tempPosition = 0;
-    //        if(onBeat == true)
-    //        {
-    //            attackOnce = false;
-    //        }
-    //    }
-    //}
+    void comboCheck()
+    {
+        if (comboInputs[(comboInputs.Count) - 1] == Combo1[Combo1Test])
+        {
+            Combo1Test++;
+        }
 
-    //void changeOnBeat()
-    //{
-    //    onBeat = !onBeat;
-    //    //onBeat = false;
-        
-    //}
+        if (comboInputs[(comboInputs.Count) - 1] == Combo2[Combo2Test])
+        {
+            Combo2Test++;
+        }
+    }
+
 }

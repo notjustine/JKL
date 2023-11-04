@@ -83,8 +83,8 @@ public class songManager : MonoBehaviour
     void Update()
     {
 
-        //If any key is pressed, start the game
-        if (Input.anyKeyDown)
+        //If the space bar is pressed, start the game
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             gameState = true;
         }

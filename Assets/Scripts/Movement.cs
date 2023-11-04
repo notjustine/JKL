@@ -13,9 +13,11 @@ public class Movement : MonoBehaviour
 
     void Update()
     {
-        var movement = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+        if (songManager.instance.gameState == true)
+        {
+            var movement = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
 
-        rb.velocity = movement * speed;
-
+            rb.velocity = movement * speed;
+        }
     }
 }

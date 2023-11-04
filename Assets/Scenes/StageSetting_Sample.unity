@@ -267,7 +267,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 21859096}
-  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!4 &21859100
 Transform:
   m_ObjectHideFlags: 0
@@ -275,15 +275,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 21859096}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1, y: 10.1, z: 19.3}
-  m_LocalScale: {x: 10, y: 10, z: 10}
-  m_ConstrainProportionsScale: 1
+  m_LocalRotation: {x: -0, y: 0.9029832, z: -0, w: 0.429676}
+  m_LocalPosition: {x: -1.6, y: 4.53, z: 29.2}
+  m_LocalScale: {x: 21.561829, y: 8.6959, z: 7.351}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1004087954}
   m_Father: {fileID: 0}
   m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 129.106, z: 0}
 --- !u!114 &21859101
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -329,7 +329,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 55553732}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.18, y: 2.3500001, z: -0.05}
+  m_LocalPosition: {x: -3.18, y: 2.3500001, z: -0.01}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -683,7 +683,7 @@ GameObject:
   - component: {fileID: 122206739}
   - component: {fileID: 122206738}
   - component: {fileID: 122206737}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Boundary (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1111,15 +1111,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5e54ea8c777e5a642ae201cda92f4746, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 39.087
+      value: 40.3
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5e54ea8c777e5a642ae201cda92f4746, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.667
+      value: -0.71
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5e54ea8c777e5a642ae201cda92f4746, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2.996
+      value: 4.3
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5e54ea8c777e5a642ae201cda92f4746, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1182,7 +1182,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &310978616
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2816,7 +2816,7 @@ GameObject:
   - component: {fileID: 799976043}
   - component: {fileID: 799976042}
   - component: {fileID: 799976041}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Boundary
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2913,7 +2913,7 @@ GameObject:
   - component: {fileID: 837483633}
   - component: {fileID: 837483632}
   - component: {fileID: 837483631}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Boundary (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3356,7 +3356,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!81 &963194226
 AudioListener:
   m_ObjectHideFlags: 0
@@ -3577,14 +3577,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1004087953}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: -0.03, y: 0.181, z: -0.642}
+  m_LocalRotation: {x: -0, y: 0.42293814, z: -0, w: 0.9061585}
+  m_LocalPosition: {x: 0.619, y: 0.181, z: 1.44}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 21859100}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 50.04, z: 0}
 --- !u!1001 &1012722798
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5288,14 +5288,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42d08d208102af040b0de5762e051f57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  songManager: {fileID: 0}
   theGameObject: {fileID: 1220615102}
-  KeyCodeSeries: 310000003200000033000000
+  comboMode: 0
+  Combo1: 6a0000006b0000006a000000
+  Combo2: 6c0000006a0000006b000000
+  Combo1Test: 0
+  Combo2Test: 0
+  comboInputs: 
   AttackSpawnPoint: {fileID: 55553733}
   MissedSpawnPoint: {fileID: 1656742994}
   AttackPrefab: {fileID: 7448424262418475041, guid: f5a994df5f6823342b76306d188f691f, type: 3}
   MissedPrefab: {fileID: 5864544263922885849, guid: 4690bdacd14bfdd42b0d954489fd6c80, type: 3}
   AttackSpeed: 60
+  attackable: 0
   attackWindow: 0.4
   missedDelay: 1
   OnSeriesComplete:
@@ -6801,7 +6806,7 @@ GameObject:
   - component: {fileID: 1370848605}
   - component: {fileID: 1370848604}
   - component: {fileID: 1370848603}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Boundary (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
