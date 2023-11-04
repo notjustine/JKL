@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class songManager : MonoBehaviour
 {
@@ -48,6 +49,8 @@ public class songManager : MonoBehaviour
 
     public bool isOnBeat = false;
 
+    public TMP_Text spaceToStart;
+
 
     //[HideInInspector] public BossAttacks attacks;
 
@@ -87,6 +90,7 @@ public class songManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             gameState = true;
+            Destroy(spaceToStart);
         }
 
         //If game is started
