@@ -4,15 +4,28 @@ using UnityEngine;
 
 public class Inputs_Lucy_Test : MonoBehaviour
 {
-    public GameObject theGameObject;
-    private Renderer GORenderer;
+    // data for Lucy's mesh
+    //public GameObject theGameObject;
+    //private Renderer GORenderer;
 
-    private Color green = new Color(0, 0.65f, 0);
-    private Color red = new Color(0.5f, 0, 0);
+    // data for Lucy's position
+    public Transform AttackSpawnPoint;
+    public Transform MissedSpawnPoint;
 
+    // data for Lucy's attack/miss
+    public GameObject AttackPrefab;
+    public GameObject MissedPrefab;
+    public float AttackSpeed = 10;
+
+    // data for handling attack timing
+    private bool onBeat = false;
+    [SerializeField] private bool attackable;       // can player attack or not
+    [SerializeField] private float attackWindow;    // delay between attacks
+    [SerializeField] private float missedDelay;     // delay for missing a beat
+
+    // data for handling combo system
     [SerializeField] private bool comboMode;
   
-    
     public KeyCode[] Combo1 = new KeyCode[] { KeyCode.Alpha1, KeyCode.Alpha2, KeyCode.Alpha3 };
     public KeyCode[] Combo2 = new KeyCode[] { KeyCode.Alpha1, KeyCode.Alpha2, KeyCode.Alpha3 };
 
@@ -20,23 +33,6 @@ public class Inputs_Lucy_Test : MonoBehaviour
     public int Combo2Test = 0;
 
     public List<KeyCode> comboInputs = new List<KeyCode>();
-
-    public Transform AttackSpawnPoint;
-    public Transform MissedSpawnPoint;
-    public GameObject AttackPrefab;
-    public GameObject MissedPrefab;
-    public float AttackSpeed = 10;
-
-    private bool onBeat = false;
-    //private bool attackOnce = false;
-    [SerializeField] private bool attackable;
-
-    // delay between attacks
-    [SerializeField] private float attackWindow;
-
-    // delay for missing a beat
-    [SerializeField] private float missedDelay;
-
 
     // Specify in the inspector the function you want to call
     // after the series have been completed
@@ -49,113 +45,152 @@ public class Inputs_Lucy_Test : MonoBehaviour
     // The index in the array of the next key to press in order to continue the series
     private int keyCodeIndex;
 
-
     void Start()
     {
-        //GORenderer stuff was for the capsule to change materials.
-        //These related lines of code are currently not under use.
-        //However, there are plans for Lucy's model to flash red when taking damage and also
-        //Contain other visual cues when the attack cooldown is occuring due to a miss
-        //Leaving this bit of code in for now so that later we can come back to it and update it as needed
+        /*
+        GORenderer stuff was for the capsule to change materials. 
+        These related lines of code are currently not under use.
 
-        GORenderer = theGameObject.GetComponent<Renderer>();
+        However, there are plans for Lucy's model to flash red when taking damage and 
+        also contain other visual cues when the attack cooldown is occuring due to a miss.
+
+        Leaving this bit of code in for now so that later we can 
+        come back to it and update it as needed.
+         */
+
+        //GORenderer = theGameObject.GetComponent<Renderer>();
         //GORenderer.material.SetColor("_Color", green);
 
-        comboMode = false;
         attackable = true;
+        comboMode = false;
+        
     }
 
-    // Update is called once per frame
     void Update()
     {
+        // check beat
         onBeat = songManager.instance.isOnBeat;
-        //print(attackOnce);
         
-        //Attack logic
+        // attack logic
         if(songManager.instance.gameState == true)
         {
-            if (comboMode == false)
+            // input on beat
+            if (onBeat)
             {
-                if (Input.GetKeyDown(KeyCode.J) && onBeat == true && attackable == true)
+                // not in a combo 
+                if (comboMode == false)
                 {
-                    createAttack();
-                    attackable = false;
-                    //GORenderer.material.SetColor("_Color", green);
+                    // J is pressed
+                    if (Input.GetKeyDown(KeyCode.J) && attackable == true)
+                    {
+                        createAttack();     // instantiate a player attack
 
-                    Invoke("attackAgain", attackWindow);
+                        attackable = false;                     // player cannot attack;
+                        Invoke("attackAgain", attackWindow);    // delay set after a successful attack
+                                                                // until player can attack again
+                    }
+                    else if (Input.GetKeyDown(KeyCode.J) && attackable == false)
+                    {
+                        CancelInvoke();     // cancel any current delay timers
+
+                        createMissedAttack();   // instantiate "Missed!" message
+
+                        Invoke("attackAgain", missedDelay);     // delay set after missed attack
+                                                                // until player can attack again
+                    }
+
+                    // K is pressed
+                    if (Input.GetKey(KeyCode.K))
+                    {
+                        comboMode = true;   // initiate a combo
+                        //print("Combo Initiated!");
+                    }
+
+                    // L is pressed
+                    if (Input.GetKey(KeyCode.L))
+                    {
+                        // reduce next damage
+                    }
+
+
                 }
-                else if (Input.GetKeyDown(KeyCode.J))
-                {
-                    //print("Missed the beat!");
-                    CancelInvoke();
-                    createMissedAttack();
-                    attackable = false;
-                    //GORenderer.material.SetColor("_Color", red);
 
-                    Invoke("attackAgain", missedDelay);
-                }
-
-                if (Input.GetKey(KeyCode.L))
+                // in a combo
+                else if (comboMode == true)
                 {
                     
-                }
+                    //After pressing the combo key (K), if J, K, or L are pressed, they are added to the comboInputs list
+                    //A list was used over an array because the array.push() method was having issues with KeyCodes
+                    if (Input.GetKeyDown(KeyCode.J))
+                    {
+                        comboInputs.Add(KeyCode.J);
+                        print("J");
 
-                if (Input.GetKey(KeyCode.K))
-                {
-                    print("Combo Initiated!");
-                    comboMode = true;
+                        comboCheck();
+                    }
+
+                    if (Input.GetKeyDown(KeyCode.K))
+                    {
+                        comboInputs.Add(KeyCode.K);
+                        print("K");
+
+                        comboCheck();
+                    }
+
+                    if (Input.GetKeyDown(KeyCode.L))
+                    {
+                        comboInputs.Add(KeyCode.L);
+                        print("L");
+
+                        comboCheck();
+                    }
+
+                    //If the maximum number of inputs expected is reached (3), check for completed combos
+
+                    if (comboInputs.Count == 3)
+                    {
+                        if (Combo1Test == 3)
+                        {
+                            print("Combo 1 Completed Successfully!");
+                        }
+                        else if (Combo2Test == 3)
+                        {
+                            print("Combo 2 Completed Successfully!");
+                        }
+                        else
+                        {
+                            print("Combo Failed!");
+                        }
+                        comboInputs.Clear();
+                        Combo1Test = 0;
+                        Combo2Test = 0;
+                        //Added invoke command so that if a combo happens to end in 'K', it does not immediately initiate another combo
+                        Invoke("comboReset", 1);
+                    }
                 }
             }
-            else if (comboMode == true)
+            
+            // input off-beat
+            else
             {
-                //After pressing the combo key (K), if J, K, or L are pressed, they are added to the comboInputs list
-                //A list was used over an array because the array.push() method was having issues with KeyCodes
-                if (Input.GetKeyDown(KeyCode.J))
+                // J/K/L is pressed
+                if (Input.GetKeyDown(KeyCode.J) || Input.GetKeyDown(KeyCode.K) || Input.GetKeyDown(KeyCode.L))
                 {
-                    comboInputs.Add(KeyCode.J);
-                    print("J");
+                    CancelInvoke();     // cancel any current delay timers
 
-                    comboCheck();
+                    createMissedAttack();   // instantiate "Missed!" message
+
+                    Invoke("attackAgain", missedDelay);     // delay set after missed attack
+                                                            // until player can attack again
                 }
 
-                if (Input.GetKeyDown(KeyCode.K))
-                {
-                    comboInputs.Add(KeyCode.K);
-                    print("K");
-
-                    comboCheck();
-                }
-
-                if (Input.GetKeyDown(KeyCode.L))
-                {
-                    comboInputs.Add(KeyCode.L);
-                    print("L");
-
-                    comboCheck();
-                }
-
-                //If the maximum number of inputs expected is reached (3), check for completed combos
-
-                if(comboInputs.Count == 3)
-                {
-                    if (Combo1Test == 3)
-                    {
-                        print("Combo 1 Completed Successfully!");
-                    }else if(Combo2Test == 3)
-                    {
-                        print("Combo 2 Completed Successfully!");
-                    }
-                    else
-                    {
-                        print("Combo Failed!");
-                    }
-                    comboInputs.Clear();
-                    Combo1Test = 0;
-                    Combo2Test = 0;
-                    //Added invoke command so that if a combo happens to end in 'K', it does not immediately initiate another combo
-                    Invoke("comboReset", 1);
-                }
             }
+
+            
+        }
+        else
+        {
+            return;
         }
     }
 
