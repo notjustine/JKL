@@ -103,7 +103,7 @@ public class Inputs_Lucy_Test : MonoBehaviour
                     if (Input.GetKey(KeyCode.K))
                     {
                         comboMode = true;   // initiate a combo
-                        //print("Combo Initiated!");
+                        print("Combo Initiated!");
                     }
 
                     // L is pressed
@@ -161,9 +161,11 @@ public class Inputs_Lucy_Test : MonoBehaviour
                         {
                             print("Combo Failed!");
                         }
+
                         comboInputs.Clear();
                         Combo1Test = 0;
                         Combo2Test = 0;
+
                         //Added invoke command so that if a combo happens to end in 'K', it does not immediately initiate another combo
                         Invoke("comboReset", 1);
                     }
@@ -182,6 +184,13 @@ public class Inputs_Lucy_Test : MonoBehaviour
 
                     Invoke("attackAgain", missedDelay);     // delay set after missed attack
                                                             // until player can attack again
+                    
+                    comboMode = false;
+                    print("Combo Failed!");
+
+                    comboInputs.Clear();
+                    Combo1Test = 0;
+                    Combo2Test = 0;
                 }
 
             }
