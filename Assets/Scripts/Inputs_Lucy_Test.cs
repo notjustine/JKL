@@ -100,7 +100,7 @@ public class Inputs_Lucy_Test : MonoBehaviour
                     }
 
                     // K is pressed
-                    if (Input.GetKey(KeyCode.K))
+                    if (Input.GetKeyDown(KeyCode.K))
                     {
                         comboMode = true;   // initiate a combo
                         print("Combo Initiated!");
@@ -186,7 +186,6 @@ public class Inputs_Lucy_Test : MonoBehaviour
                                                             // until player can attack again
                     
                     comboMode = false;
-                    print("Combo Failed!");
 
                     comboInputs.Clear();
                     Combo1Test = 0;

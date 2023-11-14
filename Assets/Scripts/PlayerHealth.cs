@@ -14,13 +14,15 @@ public class PlayerHealth : MonoBehaviour
     float pDamage = 10f;
 
     // damage taken from boss charge attack
-    float cDamage = 30f;
+    float cDamage = 25f;
+ 
     
     void Start()
     {
         // player starts with max health
         maxHealth = 100f;
         currentHealth = maxHealth;
+
     }
 
     void Update()
@@ -29,12 +31,15 @@ public class PlayerHealth : MonoBehaviour
         if (currentHealth <= 0){
             Destroy(gameObject); // temporary result
         }
+
     }
     
     private void OnCollisionEnter(Collision collision)
     {
         // player is hit by an attack
         if (collision.gameObject.tag == "Attack") {
+            
+
             currentHealth -= pDamage;
             
             // show health on UI
@@ -43,6 +48,8 @@ public class PlayerHealth : MonoBehaviour
 
         if(collision.gameObject.tag == "Boss")
         {
+
+
             currentHealth -= cDamage;
 
             // show health on UI

@@ -118,11 +118,13 @@ public class BossAttacks : MonoBehaviour
         {
             newPosition = new Vector3(randomPositions[Random.Range(0, 4)], savedPosition.y, savedPosition.z);
             transform.rotation = new Quaternion(0, 0.70711f, 0, 0.70711f);
+
+            transform.position = newPosition;
             randomized = true;
         }        
 
-        // Wait for one frame
-        yield return null;
+        // Wait for 1 second before charging
+        yield return new WaitForSeconds(1);
 
         // Moves the bus from the current position to the target position
         while (transform.position.z > targetPosition.z + 0.1f)
