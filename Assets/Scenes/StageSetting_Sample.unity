@@ -302,6 +302,7 @@ MonoBehaviour:
   songManager: {fileID: 0}
   AttackSpawnPoint: {fileID: 1004087954}
   AttackPrefab: {fileID: 481534592682692544, guid: 744d1498cb92d264597de70c3a04fd5d, type: 3}
+  BusPrefab: {fileID: 6655366874656859085, guid: f118d8890a21d8c4697326822db2e67a, type: 3}
   currentAttack: 2
   AttackSpeed: 20
   attackFrequency: 1
@@ -309,6 +310,7 @@ MonoBehaviour:
   rangeXMax: 19
   rangeYMin: 2
   rangeYMax: 10
+  chargeSpeed: 0.5
 --- !u!114 &21859102
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4033,14 +4035,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1004087953}
-  m_LocalRotation: {x: -0, y: 0.35555744, z: -0, w: 0.9346544}
+  m_LocalRotation: {x: -0, y: 0.3083001, z: -0, w: 0.9512891}
   m_LocalPosition: {x: 0.619, y: 0.181, z: 1.44}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 21859100}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 41.655, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 35.914, z: 0}
 --- !u!1001 &1012722798
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -34,6 +34,9 @@ public class BossAttacks : MonoBehaviour
 
     private float tempPosition;
 
+    [SerializeField] private float chargeSpeed = 0.5f;
+
+
 
     void Start()
     {
@@ -65,12 +68,13 @@ public class BossAttacks : MonoBehaviour
             }
 
             if (currentAttack == attackType.Charge)
-            {
-                chargeAttack();
+            {   
+                if (Input.GetKeyDown(KeyCode.I))
+                {
+                    StartCoroutine(chargeAttack());
+                }
+                
             }
-
-
-
 
         }
     }
@@ -96,27 +100,47 @@ public class BossAttacks : MonoBehaviour
         attack.GetComponent<Rigidbody>().velocity = AttackSpawnPoint.forward * AttackSpeed;
     }
 
-    public void chargeAttack()
+
+    IEnumerator chargeAttack()
     {
-        var speed = 60;
-        float[] randomPositions = {-15, -5, 5, 15};
+        //List of the random positions that the bus can start charging from
+        float[] randomPositions = { -15, -5, 5, 15 };
+
+        //setting a target position so the bus stops moving after it charges to this point
         Vector3 targetPosition = new Vector3(transform.position.x, transform.position.y, -34);
 
-        if (randomized == false)
+        //setting a newPosition variable to save the current transform.position value
+        Vector3 newPosition = transform.position;
+
+        // Set the initial position and rotation
+        // randomized variable prevents the bus from changing its position each frame
+        if(randomized == false)
         {
-            transform.position = new Vector3(randomPositions[Random.Range(0, 4)], savedPosition.y, savedPosition.z);
+            newPosition = new Vector3(randomPositions[Random.Range(0, 4)], savedPosition.y, savedPosition.z);
             transform.rotation = new Quaternion(0, 0.70711f, 0, 0.70711f);
             randomized = true;
-        }
-        
-        transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
+        }        
 
-        if(transform.position.z <= targetPosition.z)
+        // Wait for one frame
+        yield return null;
+
+        // Moves the bus from the current position to the target position
+        while (transform.position.z > targetPosition.z + 0.1f)
         {
-            //transform.position = savedPosition;
-            //transform.rotation = savedRotation;
-            randomized = false;
+            newPosition.z = newPosition.z - chargeSpeed;
+            transform.position = newPosition;
+
+            yield return null;
         }
+
+        // Reset the boss position after reaching the target
+        transform.position = savedPosition;
+        transform.rotation = savedRotation;
+        randomized = false;
+
+        //End coroutine
+        yield break;
     }
 
-}
+
+} 
