@@ -10,8 +10,11 @@ public class PlayerHealth : MonoBehaviour
     float maxHealth;
     public float currentHealth;
     
-    // damage taken from boss' attack
-    float damage = 20f;
+    // damage taken from boss projectiles
+    float pDamage = 10f;
+
+    // damage taken from boss charge attack
+    float cDamage = 30f;
     
     void Start()
     {
@@ -23,17 +26,25 @@ public class PlayerHealth : MonoBehaviour
     void Update()
     {
         // player runs out of health and dies
-        if (currentHealth <= 10){
+        if (currentHealth <= 0){
             Destroy(gameObject); // temporary result
         }
     }
     
     private void OnCollisionEnter(Collision collision)
     {
-        // boss is hit by an attack
+        // player is hit by an attack
         if (collision.gameObject.tag == "Attack") {
-            currentHealth -= damage;
+            currentHealth -= pDamage;
             
+            // show health on UI
+            playerHealth.text = "Player Health: " + currentHealth;
+        }
+
+        if(collision.gameObject.tag == "Boss")
+        {
+            currentHealth -= cDamage;
+
             // show health on UI
             playerHealth.text = "Player Health: " + currentHealth;
         }
