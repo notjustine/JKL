@@ -302,7 +302,6 @@ MonoBehaviour:
   songManager: {fileID: 0}
   AttackSpawnPoint: {fileID: 1004087954}
   AttackPrefab: {fileID: 481534592682692544, guid: 744d1498cb92d264597de70c3a04fd5d, type: 3}
-  BusPrefab: {fileID: 6655366874656859085, guid: f118d8890a21d8c4697326822db2e67a, type: 3}
   currentAttack: 2
   AttackSpeed: 20
   attackFrequency: 1
@@ -5859,12 +5858,8 @@ MonoBehaviour:
   Combo1Test: 0
   Combo2Test: 0
   comboInputs: 
-  OnSeriesComplete:
-    m_PersistentCalls:
-      m_Calls: []
-  OnSeriesFailed:
-    m_PersistentCalls:
-      m_Calls: []
+  damageReduction: 0
+  damageReductionDuration: 1
 --- !u!114 &1220615110
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5879,6 +5874,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerHealth: {fileID: 50293715}
   currentHealth: 0
+  inputsLucy: {fileID: 1220615109}
 --- !u!1 &1229009515
 GameObject:
   m_ObjectHideFlags: 0

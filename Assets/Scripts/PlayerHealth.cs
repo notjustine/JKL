@@ -9,12 +9,19 @@ public class PlayerHealth : MonoBehaviour
     
     float maxHealth;
     public float currentHealth;
+
+    public Inputs_Lucy_Test inputsLucy;
     
     // damage taken from boss projectiles
     float pDamage = 10f;
+    private float pDamageTemp;
 
     // damage taken from boss charge attack
     float cDamage = 25f;
+    private float cDamageTemp;
+    private bool hasReducedDamage = false;
+
+    [SerializeField] private float reductionValue = 0.5f;
  
     
     void Start()
@@ -22,6 +29,9 @@ public class PlayerHealth : MonoBehaviour
         // player starts with max health
         maxHealth = 100f;
         currentHealth = maxHealth;
+
+        pDamageTemp = pDamage;
+        cDamageTemp = cDamage;
 
     }
 
@@ -38,7 +48,16 @@ public class PlayerHealth : MonoBehaviour
     {
         // player is hit by an attack
         if (collision.gameObject.tag == "Attack") {
-            
+
+            if (inputsLucy.damageReduction == true && !hasReducedDamage)
+            {
+                pDamageTemp *= reductionValue;
+                hasReducedDamage = true;
+            }
+            else
+            {
+                pDamageTemp = pDamage;
+            }
 
             currentHealth -= pDamage;
             
@@ -48,9 +67,17 @@ public class PlayerHealth : MonoBehaviour
 
         if(collision.gameObject.tag == "Boss")
         {
+            if (inputsLucy.damageReduction == true && !hasReducedDamage)
+            {
+                cDamageTemp *= reductionValue;
+                hasReducedDamage = true;
+            }
+            else
+            {
+                cDamageTemp = cDamage;
+            }
 
-
-            currentHealth -= cDamage;
+            currentHealth -= cDamageTemp;
 
             // show health on UI
             playerHealth.text = "Player Health: " + currentHealth;

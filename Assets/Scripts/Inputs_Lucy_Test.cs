@@ -34,16 +34,11 @@ public class Inputs_Lucy_Test : MonoBehaviour
 
     public List<KeyCode> comboInputs = new List<KeyCode>();
 
-    // Specify in the inspector the function you want to call
-    // after the series have been completed
-    public UnityEngine.Events.UnityEvent OnSeriesComplete;
+    // variable to determine if player has damage reduction
 
-    // Specify in the inspector the function you want to call
-    // after the series have been failed because a wrong key has been pressed
-    public UnityEngine.Events.UnityEvent OnSeriesFailed;
+    public bool damageReduction = false;
+    public float damageReductionDuration = 1;
 
-    // The index in the array of the next key to press in order to continue the series
-    private int keyCodeIndex;
 
     void Start()
     {
@@ -107,9 +102,11 @@ public class Inputs_Lucy_Test : MonoBehaviour
                     }
 
                     // L is pressed
-                    if (Input.GetKey(KeyCode.L))
+                    if (Input.GetKey(KeyCode.L) && damageReduction == false)
                     {
-                        // reduce next damage
+                        // set the damage reduction boolean to true. this variable is used in the PlayerHealth.cs script
+                        damageReduction = true;
+                        Invoke("damageReductionClear", damageReductionDuration);
                     }
 
 
@@ -177,6 +174,7 @@ public class Inputs_Lucy_Test : MonoBehaviour
             {
                 // J/K/L is pressed
                 if (Input.GetKeyDown(KeyCode.J) || Input.GetKeyDown(KeyCode.K) || Input.GetKeyDown(KeyCode.L))
+                if (Input.GetKeyDown(KeyCode.J) || Input.GetKeyDown(KeyCode.K) || Input.GetKeyDown(KeyCode.L))
                 {
                     CancelInvoke();     // cancel any current delay timers
 
@@ -219,6 +217,11 @@ public class Inputs_Lucy_Test : MonoBehaviour
     void attackAgain()
     {
         attackable = true;
+    }
+
+    void damageReductionClear()
+    {
+        damageReduction = false;
     }
 
     void comboReset()
