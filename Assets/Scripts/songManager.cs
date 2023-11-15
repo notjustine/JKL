@@ -25,8 +25,10 @@ public class songManager : MonoBehaviour
     private float secPerBeat;
 
     // song position (beats) in integer
-    [SerializeField]
-    private int beatCount = 0;
+    public int beatCount = 0;
+
+    // song position for tracking consecutive beats
+    // public int beatSnapshot = 0;
 
     // the offset to the first beat of the song in seconds
     [SerializeField]
@@ -121,15 +123,27 @@ public class songManager : MonoBehaviour
             //Convert song position into integer beats
             beatCount = (int)songPositionInBeats;
 
-            //If the song is on or off beat (every other count)
+            // if the song is on or off beat (every other count)
             if (beatCount % 2 == 0)
             {
                 isOnBeat = false;
             }
             else
             {
+                // when all attacks should happen
                 isOnBeat = true;
+
+                // will snapshot every other beat
+                // beatSnapshot = beatCount;
+
+
             }
+
+            // if (beatCount == (beatSnapshot + 1))
+            //     {
+            //         print("attack now!");
+            //     }
+            
         }
         else
         {

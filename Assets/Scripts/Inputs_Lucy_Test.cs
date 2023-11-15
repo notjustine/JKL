@@ -18,7 +18,11 @@ public class Inputs_Lucy_Test : MonoBehaviour
     public float AttackSpeed = 10;
 
     // data for handling attack timing
+    private int beatCount;                          // beat of the song
+    private int beatSnapshot;                       // snapshotting the beat of the song
+
     private bool onBeat = false;
+
     [SerializeField] private bool attackable;       // can player attack or not
     [SerializeField] private float attackWindow;    // delay between attacks
     [SerializeField] private float missedDelay;     // delay for missing a beat
@@ -63,9 +67,9 @@ public class Inputs_Lucy_Test : MonoBehaviour
 
     void Update()
     {
-        // check beat
-        onBeat = songManager.instance.isOnBeat;
-        
+        beatCount = songManager.instance.beatCount;     // grab song beat count from song manager
+        onBeat = songManager.instance.isOnBeat;         // grab song beat boolean from song manager
+
         // attack logic
         if(songManager.instance.gameState == true)
         {
@@ -78,11 +82,46 @@ public class Inputs_Lucy_Test : MonoBehaviour
                     // J is pressed
                     if (Input.GetKeyDown(KeyCode.J) && attackable == true)
                     {
+
                         createAttack();     // instantiate a player attack
 
                         attackable = false;                     // player cannot attack;
                         Invoke("attackAgain", attackWindow);    // delay set after a successful attack
                                                                 // until player can attack again
+
+                        // if (!consecutive) // first attack
+                        // {
+                        //     consecutive = true;
+                        //     beatSnapshot = beatCount;
+                        // } 
+                        // else // not first attack
+                        // {
+                        //     if (beatCount == beatSnapshot + 2)
+                        //     {
+                        //         beatSnapshot = beatCount;
+                        //     }
+                        // }
+
+                        /*
+                        1. player initiates combo
+                        2. snapshot the beat
+                        3. under combo mode, check if the current time is 
+                        
+                        
+                        
+                        
+                        */
+
+                        // check if first attack or not
+                        // first attack = no consecutive attack previous to this
+                        // go straight to snapshotting the time
+
+                        // not first attack = consectuive attack previous to this
+                        // compare previously snapshotted time to current time
+
+                        // snapshot the time
+                        
+                        
                     }
                     else if (Input.GetKeyDown(KeyCode.J) && attackable == false)
                     {
@@ -99,6 +138,9 @@ public class Inputs_Lucy_Test : MonoBehaviour
                     {
                         comboMode = true;   // initiate a combo
                         print("Combo Initiated!");
+
+                        beatSnapshot = beatCount;
+                        // print ("Snapshot on " + beatSnapshot + " and expect next attack on " + (beatSnapshot + 2));
                     }
 
                     // L is pressed
@@ -115,35 +157,65 @@ public class Inputs_Lucy_Test : MonoBehaviour
                 // in a combo
                 else if (comboMode == true)
                 {
+                    /*
+                    check if the player attacks consecutively.
+                    tracks the current time of the keypress and expects another keypress 2 beats later, on the next onBeat.
+                    */
+                    if (beatCount == beatSnapshot + 2){
+
+                        /*
+                        After pressing the combo key (K), if J, K, or L are pressed, they are added to the comboInputs list.
+                        List was used over an array because the array.push() method was having issues with KeyCodes.
+                        */
+                        
+                        // J is pressed
+                        if (Input.GetKeyDown(KeyCode.J))
+                        {   
+                            comboInputs.Add(KeyCode.J);
+                            print("J");
+
+                            comboCheck();
+
+                            beatSnapshot = beatCount;
+                        }
+
+                        // K is pressed
+                        if (Input.GetKeyDown(KeyCode.K))
+                        {
+                            comboInputs.Add(KeyCode.K);
+                            print("K");
+
+                            comboCheck();
+
+                            beatSnapshot = beatCount;
+                        }
+
+                        // L is pressed
+                        if (Input.GetKeyDown(KeyCode.L))
+                        {
+                            comboInputs.Add(KeyCode.L);
+                            print("L");
+
+                            comboCheck();
+
+                            beatSnapshot = beatCount;
+                        }
+                    } 
                     
-                    //After pressing the combo key (K), if J, K, or L are pressed, they are added to the comboInputs list
-                    //A list was used over an array because the array.push() method was having issues with KeyCodes
-                    if (Input.GetKeyDown(KeyCode.J))
+                    // if the player doesn't attack consecutively (waits too long)
+                    else if (beatCount > (beatSnapshot + 2))
                     {
-                        comboInputs.Add(KeyCode.J);
-                        print("J");
+                        print("Combo Failed!");
 
-                        comboCheck();
-                    }
+                        comboInputs.Clear();
+                        Combo1Test = 0;
+                        Combo2Test = 0;
 
-                    if (Input.GetKeyDown(KeyCode.K))
-                    {
-                        comboInputs.Add(KeyCode.K);
-                        print("K");
-
-                        comboCheck();
-                    }
-
-                    if (Input.GetKeyDown(KeyCode.L))
-                    {
-                        comboInputs.Add(KeyCode.L);
-                        print("L");
-
-                        comboCheck();
+                        //Added invoke command so that if a combo happens to end in 'K', it does not immediately initiate another combo
+                        Invoke("comboReset", 1);
                     }
 
                     //If the maximum number of inputs expected is reached (3), check for completed combos
-
                     if (comboInputs.Count == 3)
                     {
                         if (Combo1Test == 3)
