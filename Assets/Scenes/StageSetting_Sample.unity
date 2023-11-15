@@ -5448,6 +5448,7 @@ MonoBehaviour:
   playerHealth: {fileID: 50293715}
   currentHealth: 0
   inputsLucy: {fileID: 1220615109}
+  reductionValue: 0.5
 --- !u!1 &1229009515
 GameObject:
   m_ObjectHideFlags: 0
@@ -5829,6 +5830,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerHealth: {fileID: 50293715}
   currentHealth: 0
+  inputsLucy: {fileID: 1220615109}
+  reductionValue: 0.5
 --- !u!114 &1342265991
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5855,12 +5858,8 @@ MonoBehaviour:
   Combo1Test: 0
   Combo2Test: 0
   comboInputs: 
-  OnSeriesComplete:
-    m_PersistentCalls:
-      m_Calls: []
-  OnSeriesFailed:
-    m_PersistentCalls:
-      m_Calls: []
+  damageReduction: 0
+  damageReductionDuration: 1
 --- !u!114 &1342265992
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8548,6 +8547,10 @@ PrefabInstance:
       value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: bef4e98cac038be42af4ad92fd228a6e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: bef4e98cac038be42af4ad92fd228a6e, type: 3}
       propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
@@ -8657,7 +8660,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: bef4e98cac038be42af4ad92fd228a6e, type: 3}
       propertyPath: m_ApplyRootMotion
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6018201780350295345, guid: bef4e98cac038be42af4ad92fd228a6e, type: 3}
       propertyPath: m_Layer
