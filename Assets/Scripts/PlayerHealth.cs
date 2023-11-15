@@ -59,7 +59,7 @@ public class PlayerHealth : MonoBehaviour
                 pDamageTemp = pDamage;
             }
 
-            currentHealth -= pDamage;
+            currentHealth -= pDamageTemp;
             
             // show health on UI
             playerHealth.text = "Player Health: " + currentHealth;
