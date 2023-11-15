@@ -7,6 +7,66 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: buildingBase2
+    second: {fileID: 2100000, guid: 20415f1eef797bd418411b3a17234139, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: doorFrame
+    second: {fileID: 2100000, guid: dd6c56b018bda0343b3fba0efe4927cb, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: doorWindow
+    second: {fileID: 2100000, guid: dc40f3b791c650e4f9f550ce1345fa8f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: gas1
+    second: {fileID: 2100000, guid: a081bc999227a6248a37e60bcbf6b597, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: gasBuilding1
+    second: {fileID: 2100000, guid: a633e800103dea54784998fa0ab253a3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: gasButton1
+    second: {fileID: 2100000, guid: 9e1e31f99cf21c64fa37595446966b4c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: gasPump3
+    second: {fileID: 2100000, guid: 2937d5af23ec426448cb588b907376ab, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: gasScreen1
+    second: {fileID: 2100000, guid: f460de3881c811d40b866bc2773e80a2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: gasSign1
+    second: {fileID: 2100000, guid: 24acf9c17d6f0614db11452e3a3bf919, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: roofThing1MAT
+    second: {fileID: 2100000, guid: 70462beff2f8e9244bd8bb25f9fc1184, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: roofThing2MAT
+    second: {fileID: 2100000, guid: dad5e854954d11e45836d0276cada568, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: roofThing3MAT
+    second: {fileID: 2100000, guid: 7e6b0e870f969554c930f0f7bc61280b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: standardSurface1
     second: {fileID: 2100000, guid: a3b60ad939b42ce459e56270c53e330e, type: 2}
   - first:
@@ -14,6 +74,41 @@ ModelImporter:
       assembly: UnityEngine.CoreModule
       name: standardSurface3
     second: {fileID: 2100000, guid: bfe81f251451d4146882dc5c50ddd562, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: window1MAT
+    second: {fileID: 2100000, guid: 2480d1996c2233c4483c9bb9e617c22c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: window2MAT
+    second: {fileID: 2100000, guid: 6448c87946fed864f869fa5ad2bd3e67, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: window3MAT
+    second: {fileID: 2100000, guid: 527aeaf10aa981c4bbaa578b736f36a3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: window4MAT
+    second: {fileID: 2100000, guid: d6fc697ddc1493e4395316a744c68e34, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: window5MAT
+    second: {fileID: 2100000, guid: a06dc74286194484da2f28711a58049c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: window6MAT
+    second: {fileID: 2100000, guid: e770c1456dc54f24a9866a7fca5fed9e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: windowMAT
+    second: {fileID: 2100000, guid: 4d299c0337027484686740d916700ef3, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -98,7 +193,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.099999994
+    globalScale: 10
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
