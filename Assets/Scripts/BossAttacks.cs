@@ -5,10 +5,10 @@ using UnityEngine;
 public class BossAttacks : MonoBehaviour
 {
     public songManager songManager;
-
     public Transform AttackSpawnPoint;
     public GameObject AttackPrefab;
 
+    // these are variables to create a boss pattern manager
     public enum attackType
     {
         Neutral,
@@ -16,15 +16,9 @@ public class BossAttacks : MonoBehaviour
         Charge,
         FireCharge
     }
-
     public attackType currentAttack;
-
- 
-    private bool randomized = false;
-
-    private Vector3 savedPosition;
-    private Quaternion savedRotation;
-
+    
+    // these are variables for the boss projectiles
     public float AttackSpeed = 10;
     public float attackFrequency = 1;
     public float rangeXMin = -1;
@@ -32,19 +26,22 @@ public class BossAttacks : MonoBehaviour
     public float rangeYMin = -1;
     public float rangeYMax = 1;
 
-    private float tempPosition;
-
+    // these are variables for the bus charge coroutine
+    private Vector3 savedPosition;
+    private Quaternion savedRotation;
+    private bool randomized = false;
     [SerializeField] private float chargeSpeed = 0.5f;
 
-
+    // used for timing attacks to beats. So far this is being used for the projectile and charge attacks.
+    private float tempPosition; 
 
     void Start()
     {
-        savedPosition = transform.position;
+        // saves the current position and rotation values of the bus so it can reset to this later
+        savedPosition = transform.position; 
         savedRotation = transform.rotation;
     }
 
-   
 
     private void Update()
     {
@@ -68,14 +65,12 @@ public class BossAttacks : MonoBehaviour
             }
 
             if (currentAttack == attackType.Charge)
-            {   
+            {
                 if (Input.GetKeyDown(KeyCode.I))
                 {
                     StartCoroutine(chargeAttack());
                 }
-                
             }
-
         }
     }
     
@@ -88,18 +83,19 @@ public class BossAttacks : MonoBehaviour
 
         if (songManager.instance.songPositionInBeats - tempPosition >= attackFrequency)
         {
-            createAttack();
+            createProjectile();
             tempPosition = 0;
         }
     }
-
-    public void createAttack()
+    public void createProjectile()
     {
-        var randomPosition = new Vector3(Random.Range(rangeXMin, rangeXMax), Random.Range(rangeYMin, rangeYMax), AttackSpawnPoint.position.z);
-        var attack = Instantiate(AttackPrefab, randomPosition, AttackSpawnPoint.rotation);
-        attack.GetComponent<Rigidbody>().velocity = AttackSpawnPoint.forward * AttackSpeed;
+        var attack = Instantiate(AttackPrefab, AttackSpawnPoint.position, AttackSpawnPoint.rotation);
+        Vector3 playerPosition = GameObject.FindWithTag("Player").transform.position;
+        playerPosition.y += 2;
+        Vector3 direction = playerPosition - AttackSpawnPoint.position;
+        direction = direction.normalized;
+        attack.GetComponent<Rigidbody>().velocity = direction * AttackSpeed;
     }
-
 
     IEnumerator chargeAttack()
     {
@@ -117,14 +113,14 @@ public class BossAttacks : MonoBehaviour
         if(randomized == false)
         {
             newPosition = new Vector3(randomPositions[Random.Range(0, 4)], savedPosition.y, savedPosition.z);
-            transform.rotation = new Quaternion(0, 0.70711f, 0, 0.70711f);
+            transform.rotation = new Quaternion(0, 1, 0, 0);
 
             transform.position = newPosition;
             randomized = true;
-        }        
+        }
 
         // Wait for 1 second before charging
-        yield return new WaitForSeconds(1);
+        yield return new WaitUntil(chargeReady);
 
         // Moves the bus from the current position to the target position
         while (transform.position.z > targetPosition.z + 0.1f)
@@ -143,6 +139,25 @@ public class BossAttacks : MonoBehaviour
         //End coroutine
         yield break;
     }
+
+    bool chargeReady() // used in the coroutine to make the bus wait X number of beats before charging at the player
+    {
+        if (tempPosition == 0)
+        {
+            tempPosition = songManager.instance.songPositionInBeats;
+        }
+
+        if (songManager.instance.beatCount - tempPosition >= 2) // number of beats. Currently set to 2.
+        {
+            tempPosition = 0;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
 
 
 } 

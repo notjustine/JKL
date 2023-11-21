@@ -11,7 +11,10 @@ public class BossHealth : MonoBehaviour
     public float currentHealth;
     
     // damage taken from player's attack
-    float damage = 5f; 
+    float damage = 2f;
+
+    // damage taken from player's combo 1 attack
+    float bigDamage = 15f;
 
     void Start()
     {
@@ -34,6 +37,15 @@ public class BossHealth : MonoBehaviour
         if (collision.gameObject.tag == "Attack") {
             currentHealth -= damage;
             
+            // show health on UI
+            bossHealth.text = "Boss Health: " + currentHealth;
+        }
+
+        // boss is hit by an attack
+        if (collision.gameObject.tag == "BigAttack")
+        {
+            currentHealth -= bigDamage;
+
             // show health on UI
             bossHealth.text = "Boss Health: " + currentHealth;
         }

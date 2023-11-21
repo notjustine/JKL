@@ -151,10 +151,6 @@ public class songManager : MonoBehaviour
             songState = false;
         }
 
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            Time.timeScale = 0;
-        }
 
         //print(isOnBeat);
 

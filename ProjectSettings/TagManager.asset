@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Boss
   - Attack
+  - BigAttack
   layers:
   - Default
   - TransparentFX
@@ -19,7 +20,7 @@ TagManager:
   - BossAttacks
   - Background_Assets
   - Boundaries
-  - 
+  - Floor
   - 
   - 
   - 

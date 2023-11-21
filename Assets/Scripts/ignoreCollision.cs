@@ -20,6 +20,9 @@ public class ignoreCollision : MonoBehaviour
 
         //Prevents boss attacks from colliding with the invisible play area boundaries
         Physics.IgnoreLayerCollision(9, 11);
+
+        //Prevents player attacks from colliding with the floor
+        Physics.IgnoreLayerCollision(8, 12);
     }
 
     

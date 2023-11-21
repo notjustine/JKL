@@ -13,7 +13,8 @@ public class Inputs_Lucy_Test : MonoBehaviour
     public Transform MissedSpawnPoint;
 
     // data for Lucy's attack/miss
-    public GameObject AttackPrefab;
+    public GameObject AttackPrefab; // basic attack prefab (J)
+    public GameObject combo1Prefab; // combo 1 attack prefab
     public GameObject MissedPrefab;
     public float AttackSpeed = 10;
 
@@ -76,7 +77,7 @@ public class Inputs_Lucy_Test : MonoBehaviour
             // input on beat
             if (onBeat)
             {
-                // not in a combo 
+                // not in combo mode 
                 if (comboMode == false)
                 {
                     // J is pressed
@@ -154,7 +155,7 @@ public class Inputs_Lucy_Test : MonoBehaviour
 
                 }
 
-                // in a combo
+                // in combo mode
                 else if (comboMode == true)
                 {
                     /*
@@ -221,6 +222,7 @@ public class Inputs_Lucy_Test : MonoBehaviour
                         if (Combo1Test == 3)
                         {
                             print("Combo 1 Completed Successfully!");
+                            combo1();
                         }
                         else if (Combo2Test == 3)
                         {
@@ -266,42 +268,44 @@ public class Inputs_Lucy_Test : MonoBehaviour
 
             
         }
+        // if gameState is not true
         else
         {
             return;
         }
     }
 
-    void createAttack()
+    void createAttack()  // create basic attack (J)
     {
         var attack = Instantiate(AttackPrefab, AttackSpawnPoint.position, AttackSpawnPoint.rotation);
         Vector3 bossPosition = GameObject.FindWithTag("Boss").transform.position;
+        bossPosition.y += 6;
         Vector3 direction = bossPosition - AttackSpawnPoint.position;
         direction = direction.normalized;
         attack.GetComponent<Rigidbody>().velocity = direction * AttackSpeed;
     }
 
-    void createMissedAttack()
+    void createMissedAttack() // Text prefab when player misses
     {
         Instantiate(MissedPrefab, MissedSpawnPoint.position, MissedSpawnPoint.rotation);
     }
 
-    void attackAgain()
+    void attackAgain() // used for Invoke function to allow player to attack again
     {
         attackable = true;
     }
 
-    void damageReductionClear()
+    void damageReductionClear() // used for Invoke function to turn off damage reduction
     {
         damageReduction = false;
     }
 
-    void comboReset()
+    void comboReset() // used for Invoke function to turn off combo mode
     {
         comboMode = false;
     }
 
-    void comboCheck()
+    void comboCheck() // check player inputs and whether they fulfill combo requirements
     {
         if (comboInputs[(comboInputs.Count) - 1] == Combo1[Combo1Test])
         {
@@ -312,6 +316,16 @@ public class Inputs_Lucy_Test : MonoBehaviour
         {
             Combo2Test++;
         }
+    }
+
+    void combo1() // create combo 1 attack
+    {
+        var attack = Instantiate(combo1Prefab, AttackSpawnPoint.position, AttackSpawnPoint.rotation);
+        Vector3 bossPosition = GameObject.FindWithTag("Boss").transform.position;
+        bossPosition.y += 6;
+        Vector3 direction = bossPosition - AttackSpawnPoint.position;
+        direction = direction.normalized;
+        attack.GetComponent<Rigidbody>().velocity = direction * (AttackSpeed * 0.3f);
     }
 
 }
