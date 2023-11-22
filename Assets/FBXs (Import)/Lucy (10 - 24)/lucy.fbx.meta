@@ -3,7 +3,137 @@ guid: 98541e0bf14fe1241b64438521bf5861
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: aiStandardSurface10
+    second: {fileID: 2100000, guid: a0e97d4efebc35640bd4ee6fdafc20ac, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: aiStandardSurface11
+    second: {fileID: 2100000, guid: 3aafd8cafa616ec4e9159521134e21b4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: aiStandardSurface12
+    second: {fileID: 2100000, guid: e938b4842e809f349a026f5f4fd0d21c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: aiStandardSurface13
+    second: {fileID: 2100000, guid: c1f38f84c0c8be344936f4ba0c19b9c3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: aiStandardSurface14
+    second: {fileID: 2100000, guid: 887285a7f6d4f314f8248cd5dd3067ef, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: aiStandardSurface15
+    second: {fileID: 2100000, guid: 39eecec720c74cd4e809b6483afe7b9a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: aiStandardSurface16
+    second: {fileID: 2100000, guid: c3f02dab146810a49bf08ea45ee3be8e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: aiStandardSurface17
+    second: {fileID: 2100000, guid: 0a60b44994e2d904da042cbed2ed0b46, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: aiStandardSurface2
+    second: {fileID: 2100000, guid: e78063375c49a2247bf1fcfb00d03994, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: aiStandardSurface3
+    second: {fileID: 2100000, guid: 4abc45e69dbe44b46bed0ab2262724a3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: aiStandardSurface4
+    second: {fileID: 2100000, guid: 684f9a2a755a93142b16ca2322b3903e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: aiStandardSurface5
+    second: {fileID: 2100000, guid: 49aae46d2acd0cf4785beebe2fae7333, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: aiStandardSurface6
+    second: {fileID: 2100000, guid: 36c59b7372e67dd4bbc88f05e2789303, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: aiStandardSurface7
+    second: {fileID: 2100000, guid: db420b42ea07a8a4cafa535ab96ad732, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: aiStandardSurface8
+    second: {fileID: 2100000, guid: f2acef86f52eca246858de82ccc93512, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: aiStandardSurface9
+    second: {fileID: 2100000, guid: 56cc09181b4fd0f4fad29096e96b0c34, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: standardSurface3
+    second: {fileID: 2100000, guid: b85e07a9a5bc7d647b38e3c2680f3644, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: surfaceShader10
+    second: {fileID: 2100000, guid: 15b7e12bd1989f442b8e428c0926350b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: surfaceShader11
+    second: {fileID: 2100000, guid: 4f7408edce13aa24d8c164f86b78717e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: surfaceShader12
+    second: {fileID: 2100000, guid: d140d9b503a39364a8eb05a3f05b6826, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: surfaceShader13
+    second: {fileID: 2100000, guid: 0d640fb82f4511b46b9f51895c27d800, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: surfaceShader14
+    second: {fileID: 2100000, guid: eb3a363d8db98cd4d9ad3d33cdf88be1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: surfaceShader15
+    second: {fileID: 2100000, guid: 059f06a01b1936640842025b04041101, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: surfaceShader16
+    second: {fileID: 2100000, guid: 5a3558ce9f6764843b25632e486ef4f2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: surfaceShader17
+    second: {fileID: 2100000, guid: 02af6cba00656694d866e487298298c2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: surfaceShader18
+    second: {fileID: 2100000, guid: 550ce15b2f0ccbf4b962766debc3259a, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -16,10 +146,7 @@ ModelImporter:
     optimizeGameObjects: 0
     removeConstantScaleCurves: 1
     motionNodeName: 
-    rigImportErrors: "Avatar creation failed:\n\tAmbiguous Transform 'character5/Character4_Hips/Character4_Spine/Character4_Spine1/Character4_Spine2/Character4_Neck/Character4_Head/eyelashes1/eyelashR/eyebrowR2'
-      and 'character5/Character4_Hips/Character4_Spine/Character4_Spine1/Character4_Spine2/Character4_Neck/Character4_Head/eyelashes1/eyelashR/eyebrowR2/eyebrowR2'
-      found in hierarchy for human bone 'Jaw'. Transform name mapped to a human bone
-      must be unique.\n"
+    rigImportErrors: 
     rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
