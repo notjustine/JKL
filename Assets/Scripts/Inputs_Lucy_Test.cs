@@ -11,10 +11,12 @@ public class Inputs_Lucy_Test : MonoBehaviour
     // data for Lucy's position
     public Transform AttackSpawnPoint;
     public Transform MissedSpawnPoint;
+    public Transform ShieldSpawnPoint;
 
     // data for Lucy's attack/miss
     public GameObject AttackPrefab; // basic attack prefab (J)
     public GameObject combo1Prefab; // combo 1 attack prefab
+    public GameObject combo2Prefab; // combo 2 shield prefab
     public GameObject MissedPrefab;
     public float AttackSpeed = 10;
 
@@ -43,6 +45,12 @@ public class Inputs_Lucy_Test : MonoBehaviour
 
     public bool damageReduction = false;
     public float damageReductionDuration = 1;
+
+    // variables to determine if player has damage negation
+
+    public bool damageNegation = false;
+    // if the negation duration is changed, also change the time that the shield is visually present in shieldBehavior.cs so they match
+    public float damageNegationDuration = 3;
 
 
     void Start()
@@ -227,6 +235,7 @@ public class Inputs_Lucy_Test : MonoBehaviour
                         else if (Combo2Test == 3)
                         {
                             print("Combo 2 Completed Successfully!");
+                            combo2();
                         }
                         else
                         {
@@ -300,6 +309,11 @@ public class Inputs_Lucy_Test : MonoBehaviour
         damageReduction = false;
     }
 
+    void damageNegationClear() //used for Invoke function to turn off damage negation
+    {
+        damageNegation = false;
+    }
+
     void comboReset() // used for Invoke function to turn off combo mode
     {
         comboMode = false;
@@ -326,6 +340,14 @@ public class Inputs_Lucy_Test : MonoBehaviour
         Vector3 direction = bossPosition - AttackSpawnPoint.position;
         direction = direction.normalized;
         attack.GetComponent<Rigidbody>().velocity = direction * (AttackSpeed * 0.3f);
+    }
+
+    void combo2() // create combo 2 shield
+    {
+        GameObject player = GameObject.FindWithTag("Player");
+        Instantiate(combo2Prefab, ShieldSpawnPoint.position, ShieldSpawnPoint.rotation, player.transform);
+        damageNegation = true;
+        Invoke("damageNegationClear", damageNegationDuration);
     }
 
 }

@@ -10,7 +10,7 @@ public class PlayerHealth : MonoBehaviour
     float maxHealth;
     public float currentHealth;
 
-    public Inputs_Lucy_Test inputsLucy;
+    //public Inputs_Lucy_Test inputsLucy;
     
     // damage taken from boss projectiles
     float pDamage = 10f;
@@ -18,7 +18,7 @@ public class PlayerHealth : MonoBehaviour
 
     // damage taken from boss charge attack
     float cDamage = 25f;
-    private float cDamageTemp;
+    [SerializeField] private float cDamageTemp;
     private bool hasReducedDamage = false;
 
     [SerializeField] private float reductionValue = 0.5f;
@@ -42,6 +42,21 @@ public class PlayerHealth : MonoBehaviour
             Destroy(gameObject); // temporary result
         }
 
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            Inputs_Lucy_Test inputsLucy = GetComponentInParent<Inputs_Lucy_Test>();
+            print(inputsLucy.damageReduction);
+        }
+        
+        /*if(inputsLucy.damageReduction == true && !hasReducedDamage)
+        {
+            cDamageTemp *= reductionValue;
+        }
+        else
+        {
+            cDamageTemp = cDamage;
+        }*/
+
     }
     
     private void OnCollisionEnter(Collision collision)
@@ -49,13 +64,18 @@ public class PlayerHealth : MonoBehaviour
         // player is hit by an attack
         if (collision.gameObject.tag == "Attack") {
 
+            Inputs_Lucy_Test inputsLucy = GetComponentInParent<Inputs_Lucy_Test>();
+
             if (inputsLucy.damageReduction == true && !hasReducedDamage)
             {
                 pDamageTemp *= reductionValue;
                 hasReducedDamage = true;
             }
-            else
+            else if(inputsLucy.damageNegation == true)
             {
+                pDamageTemp = 0;
+            }
+            else{
                 pDamageTemp = pDamage;
             }
 
@@ -67,13 +87,17 @@ public class PlayerHealth : MonoBehaviour
 
         if(collision.gameObject.tag == "Boss")
         {
+            Inputs_Lucy_Test inputsLucy = GetComponentInParent<Inputs_Lucy_Test>();
+
             if (inputsLucy.damageReduction == true && !hasReducedDamage)
             {
                 cDamageTemp *= reductionValue;
                 hasReducedDamage = true;
             }
-            else
-            {
+            else if(inputsLucy.damageNegation == true){
+                cDamageTemp = 0;
+            }
+            else{
                 cDamageTemp = cDamage;
             }
 

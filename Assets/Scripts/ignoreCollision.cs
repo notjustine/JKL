@@ -23,6 +23,18 @@ public class ignoreCollision : MonoBehaviour
 
         //Prevents player attacks from colliding with the floor
         Physics.IgnoreLayerCollision(8, 12);
+
+        //Prevents player shield from colliding with the floor
+        Physics.IgnoreLayerCollision(12, 13);
+
+        //Prevents player shield from collding with the boundaries
+        Physics.IgnoreLayerCollision(11, 13);
+
+        //Prevents player shield from collding with the player
+        Physics.IgnoreLayerCollision(6, 13);
+
+        //Prevents player shield from collding with player attacks
+        Physics.IgnoreLayerCollision(8, 13);
     }
 
     
