@@ -35,6 +35,9 @@ public class ignoreCollision : MonoBehaviour
 
         //Prevents player shield from collding with player attacks
         Physics.IgnoreLayerCollision(8, 13);
+
+        //Prevents player shield from colliding with boss
+        Physics.IgnoreLayerCollision(7, 13);
     }
 
     

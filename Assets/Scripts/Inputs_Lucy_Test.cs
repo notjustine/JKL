@@ -43,8 +43,8 @@ public class Inputs_Lucy_Test : MonoBehaviour
 
     // variable to determine if player has damage reduction
 
-    public bool damageReduction = false;
-    public float damageReductionDuration = 1;
+  /*public bool damageReduction = false;
+    public float damageReductionDuration = 1;*/
 
     // variables to determine if player has damage negation
 
@@ -153,12 +153,12 @@ public class Inputs_Lucy_Test : MonoBehaviour
                     }
 
                     // L is pressed
-                    if (Input.GetKey(KeyCode.L) && damageReduction == false)
+                    /*if (Input.GetKey(KeyCode.L) && damageReduction == false)
                     {
                         // set the damage reduction boolean to true. this variable is used in the PlayerHealth.cs script
                         damageReduction = true;
                         Invoke("damageReductionClear", damageReductionDuration);
-                    }
+                    }*/
 
 
                 }
@@ -304,10 +304,10 @@ public class Inputs_Lucy_Test : MonoBehaviour
         attackable = true;
     }
 
-    void damageReductionClear() // used for Invoke function to turn off damage reduction
+    /*void damageReductionClear() // used for Invoke function to turn off damage reduction
     {
         damageReduction = false;
-    }
+    }*/
 
     void damageNegationClear() //used for Invoke function to turn off damage negation
     {
