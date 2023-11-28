@@ -17,6 +17,8 @@ public class AnimationLucyScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (songManager.instance.gameState == true)
+        {
         if (Input.GetKey("w")|| Input.GetKey("a")||Input.GetKey("s")||Input.GetKey("d"))
         {
             lucyAnimator.SetBool("isRunning", true);
@@ -24,5 +26,6 @@ public class AnimationLucyScript : MonoBehaviour
         else{
             lucyAnimator.SetBool("isRunning", false);
         }
+        }//SongManager Close
     }
 }
