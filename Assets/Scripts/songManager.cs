@@ -56,6 +56,8 @@ public class songManager : MonoBehaviour
 
     public TMP_Text spaceToStart;
 
+    [SerializeField] public GameObject pauseCanvas;
+
     //makes this script a singleton so its variables can be accessed easily in other scripts
     public static songManager instance;
 
@@ -137,7 +139,7 @@ public class songManager : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && songStart == true)
         {
             pauseGame();
         }
@@ -151,6 +153,8 @@ public class songManager : MonoBehaviour
             song.Pause();
             Time.timeScale = 0;
             pauseTime = (float) AudioSettings.dspTime; // records the exact time the game paused
+            //(Roann / UI Pause) Shows up the Pause canvas UI
+            pauseCanvas.GetComponent<Canvas>().enabled = true;
         }
         else
         {
@@ -159,6 +163,8 @@ public class songManager : MonoBehaviour
             Time.timeScale = 1;
             float tempTime = (float)AudioSettings.dspTime - pauseTime; // saves the amount of time the game was paused for
             dspSongTime += tempTime; // adjusts the dspSongTime variable with the time the game was paused for so the beat count does not jump ahead to where dspTime currently is
+            //(Roann / UI Pause) Hides up the Pause canvas UI
+            pauseCanvas.GetComponent<Canvas>().enabled = false;
         }
     }
    
