@@ -11,8 +11,8 @@ public class attackIndicator : MonoBehaviour
     public GameObject bar;
     private Renderer barRenderer;
 
-    private Color black = new Color(0, 0, 0);
-    private Color cyan = new Color(0, 1, 1);
+    private Color RGBgrey = new Color(137, 137, 137);
+    private Color RGBwhite = new Color(255, 255, 255);
 
     private int songBeat;
 
@@ -43,11 +43,12 @@ public class attackIndicator : MonoBehaviour
 
         if (songBeat % 2 == 0)
         {
-            barRenderer.material.color = Color.cyan;
+            // barRenderer.material.color = Color.cyan;
+            barRenderer.material.color = Color.white;
         }
         else
         {
-            barRenderer.material.color = Color.black;
+            barRenderer.material.color = Color.grey;
         }
 
         //if(beatTracker.onBeat == false)

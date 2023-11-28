@@ -20,6 +20,8 @@ public class PlayerHealth : MonoBehaviour
     float cDamage = 25f;
     [SerializeField] private float cDamageTemp;
 
+    Animator lucyAnimator; //Referencing the animator as LucyAnimator
+
     //private bool hasReducedDamage = false;
     //private float reductionValue = 0.5f;
  
@@ -33,14 +35,23 @@ public class PlayerHealth : MonoBehaviour
         pDamageTemp = pDamage;
         cDamageTemp = cDamage;
 
+        //
+        lucyAnimator = GetComponent<Animator>();//Getting component of the Animator
+
     }
 
     void Update()
     {
         // player runs out of health and dies
         if (currentHealth <= 0){
+
+            //Instead of destroying the gameObject, this plays the Death animation.
+            // lucyAnimator.SetBool("isDead", true);
+            //THIS LINE DOESNT WORK, the animation plays but it I forgot that the game pauses it will still take damages when the object isnt destroyed.
+
             Destroy(gameObject); // temporary result
             songManager.instance.pauseGame();
+            
         }
 
     }
@@ -70,6 +81,10 @@ public class PlayerHealth : MonoBehaviour
             
             // show health on UI
             playerHealth.text = "Player Health: " + currentHealth;
+
+            //(ANIMATION) The animation isHitTrigger is set to true and exits back to idle or running animation
+            lucyAnimator.SetTrigger("isHitTrigger");
+
         }
 
         if(collision.gameObject.tag == "Boss")

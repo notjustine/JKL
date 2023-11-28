@@ -3,7 +3,67 @@ guid: 067ee21df9a29354d8155ce6e06cb1fa
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: body1MAT
+    second: {fileID: 2100000, guid: b9e0170c44057ce4d95e0475f716b723, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: bodyMAT
+    second: {fileID: 2100000, guid: d49243f27a4a4cf459d1dd641d6e60ac, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: bridgeMAT
+    second: {fileID: 2100000, guid: b40a92153512f424980930e6a7ce3fd3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: headstockMAT
+    second: {fileID: 2100000, guid: 29bc9166c71fa844d81a34161a5712e0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: neckMAT
+    second: {fileID: 2100000, guid: e1275f3388a626947866058243a683c6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ornament1MAT
+    second: {fileID: 2100000, guid: 44242b1656d77d94eb3c3b0a27c5f622, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ornament2MAT
+    second: {fileID: 2100000, guid: b58e5157e60866e49bf575a5e7dc5fbd, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ornament3MAT
+    second: {fileID: 2100000, guid: 9ca3885c43326264fa85cc0b717c706c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ornament4MAT
+    second: {fileID: 2100000, guid: bc22adea896ba174ba2bd4a5082c1ecc, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pegMAT
+    second: {fileID: 2100000, guid: 5cf50b065f02c2945bceb2f1b6929088, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pickupMAT
+    second: {fileID: 2100000, guid: 07229b7163c6c9d4783bdd67f8b3df63, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: standardSurface1
+    second: {fileID: 2100000, guid: 606789cfdf17bd9478c08d7ba8f40300, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -32,7 +92,7 @@ ModelImporter:
     extraExposedTransformPaths: []
     extraUserProperties: []
     clipAnimations: []
-    isReadable: 0
+    isReadable: 1
   meshes:
     lODScreenPercentages: []
     globalScale: 10
@@ -88,7 +148,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.099999994
+    globalScale: 10
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

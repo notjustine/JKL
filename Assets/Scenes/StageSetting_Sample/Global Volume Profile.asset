@@ -46,7 +46,7 @@ MonoBehaviour:
     m_Value: 33.66
   gaussianEnd:
     m_OverrideState: 1
-    m_Value: 209.81
+    m_Value: 380
   gaussianMaxRadius:
     m_OverrideState: 0
     m_Value: 1
@@ -103,7 +103,7 @@ MonoBehaviour:
   active: 1
   intensity:
     m_OverrideState: 1
-    m_Value: 0.318
+    m_Value: 0.117
 --- !u!114 &6328847009964615883
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -122,7 +122,7 @@ MonoBehaviour:
     m_Value: 0.9
   intensity:
     m_OverrideState: 1
-    m_Value: 3
+    m_Value: 6
   scatter:
     m_OverrideState: 0
     m_Value: 0.7
