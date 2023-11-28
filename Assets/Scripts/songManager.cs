@@ -27,6 +27,9 @@ public class songManager : MonoBehaviour
     // song position (beats) in integer
     public int beatCount = 0;
 
+    // records the amount of time paused in dsp time so it can be adjusted after it is unpaused
+    private float pauseTime;
+
     // song position for tracking consecutive beats
     // public int beatSnapshot = 0;
 
@@ -46,16 +49,12 @@ public class songManager : MonoBehaviour
     [HideInInspector] 
     public bool gameState = false;
 
-    //Whether the song is playing or not. This prevents the song start command from looping.
-    private bool songState = false;
+    //Whether the song has started or not. This prevents the song start command from looping.
+    private bool songStart = false;
 
     public bool isOnBeat = false;
 
     public TMP_Text spaceToStart;
-
-
-    //[HideInInspector] public BossAttacks attacks;
-
 
     //makes this script a singleton so its variables can be accessed easily in other scripts
     public static songManager instance;
@@ -99,10 +98,10 @@ public class songManager : MonoBehaviour
         if (gameState == true)
         {
             //Start the music
-            if (songState == false)
+            if (songStart == false)
             {
                 song.Play();
-                songState = true;
+                songStart = true; // Do not touch the songStart variable again unless you want the song to start from the beginning again
             }
 
             // Record the time when the music starts
@@ -111,7 +110,7 @@ public class songManager : MonoBehaviour
                 dspSongTime = (float)AudioSettings.dspTime;
                 songStartRecorded = true;
             }
-            
+
             //Determine how many seconds since the song started
             songPositionInSec = (float)(AudioSettings.dspTime - dspSongTime);
             songPosWithOffset = songPositionInSec + firstBeatOffset;
@@ -135,32 +134,32 @@ public class songManager : MonoBehaviour
 
                 // will snapshot every other beat
                 // beatSnapshot = beatCount;
-
-
             }
+        }
 
-            // if (beatCount == (beatSnapshot + 1))
-            //     {
-            //         print("attack now!");
-            //     }
-            
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            pauseGame();
+        }
+    }
+
+    public void pauseGame()
+    {
+        if(gameState == true)
+        {
+            gameState = false;
+            song.Pause();
+            Time.timeScale = 0;
+            pauseTime = (float) AudioSettings.dspTime; // records the exact time the game paused
         }
         else
         {
-            //song.Pause();
-            songState = false;
+            gameState = true;
+            song.UnPause();
+            Time.timeScale = 1;
+            float tempTime = (float)AudioSettings.dspTime - pauseTime; // saves the amount of time the game was paused for
+            dspSongTime += tempTime; // adjusts the dspSongTime variable with the time the game was paused for so the beat count does not jump ahead to where dspTime currently is
         }
-
-
-        //print(isOnBeat);
-
-            //Start the music
-            //if (gameState == true && songState == false)
-            //{
-            //    song.Play();
-            //    songState = true;
-            //}
-
     }
    
 }
