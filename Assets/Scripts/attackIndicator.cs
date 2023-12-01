@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class attackIndicator : MonoBehaviour
@@ -7,7 +8,6 @@ public class attackIndicator : MonoBehaviour
     //private Inputs beatTracker;
 
     public songManager songManager;
-
     public GameObject bar;
     private Renderer barRenderer;
 
@@ -38,6 +38,8 @@ public class attackIndicator : MonoBehaviour
         //{
         //    barRenderer.material.SetColor("_Color", black);
         //}
+
+
 
         songBeat = (int)songManager.instance.songPosWithOffset;
 
