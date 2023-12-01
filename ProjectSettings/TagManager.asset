@@ -8,6 +8,7 @@ TagManager:
   - Attack
   - BigAttack
   - Paused
+  - AttackIndicator
   layers:
   - Default
   - TransparentFX

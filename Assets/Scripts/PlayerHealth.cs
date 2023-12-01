@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI; // For UI Changes
 using TMPro;
 
 public class PlayerHealth : MonoBehaviour
@@ -20,10 +21,19 @@ public class PlayerHealth : MonoBehaviour
     float cDamage = 25f;
     [SerializeField] private float cDamageTemp;
 
+
+
     Animator lucyAnimator; //Referencing the animator as LucyAnimator
 
     //private bool hasReducedDamage = false;
     //private float reductionValue = 0.5f;
+
+    
+    //(Roann) UI Slider HP Changes to call slider component
+    public Slider slider;
+    public void SetHealth(float health){
+        slider.value = health;
+    }
  
     
     void Start()
@@ -81,6 +91,10 @@ public class PlayerHealth : MonoBehaviour
             
             // show health on UI
             playerHealth.text = "Player Health: " + currentHealth;
+            SetHealth(currentHealth); //(Roann) Setting the value of the health UI changes
+
+
+
 
             //(ANIMATION) The animation isHitTrigger is set to true and exits back to idle or running animation
             lucyAnimator.SetTrigger("isHitTrigger");
@@ -108,6 +122,7 @@ public class PlayerHealth : MonoBehaviour
 
             // show health on UI
             playerHealth.text = "Player Health: " + currentHealth;
+            SetHealth(currentHealth); //(Roann) Setting the value of the health UI changes
         }
     }
 }
