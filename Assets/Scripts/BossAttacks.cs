@@ -13,8 +13,8 @@ public class BossAttacks : MonoBehaviour
     {
         Neutral,
         Projectile,
-        Charge,
-        FireCharge
+        Homing,
+        Charge        
     }
     public attackType currentAttack;
     
@@ -33,7 +33,12 @@ public class BossAttacks : MonoBehaviour
     [SerializeField] private float chargeSpeed = 0.5f;
 
     // used for timing attacks to beats. So far this is being used for the projectile and charge attacks.
-    private float tempPosition; 
+    private double tempPosition;
+
+    private void Awake()
+    {
+        currentAttack = attackType.Neutral;
+    }
 
     void Start()
     {
@@ -47,34 +52,26 @@ public class BossAttacks : MonoBehaviour
     {
         if (songManager.instance.gameState == true)
         {
-            /*switch (currentAttack) {
-                case attackType.Projectile:
-                    print("Projectile attacks");
-                    break;
-                case attackType.Charge:
-                    print("Charge attack!");
-                    break;
-                case attackType.FireCharge:
-                    print("The Ground is ablaze!");
-                    break;                
-            }*/
-
-            if (currentAttack == attackType.Projectile)
+            if(songManager.instance.currentAttack == songManager.attackType.Phase1)
             {
-                attackTiming();
+                attack1();
+                
+                
             }
 
-            if (currentAttack == attackType.Charge)
+            if (songManager.instance.currentAttack == songManager.attackType.Phase2)
             {
-                if (Input.GetKeyDown(KeyCode.I))
-                {
-                    StartCoroutine(chargeAttack());
-                }
+                attack2();
+            }
+
+            if (songManager.instance.currentAttack == songManager.attackType.Phase3)
+            {
+                attack2();
             }
         }
     }
     
-    void attackTiming()
+    void attack1()
     {
         if (tempPosition == 0)
         {
@@ -87,7 +84,28 @@ public class BossAttacks : MonoBehaviour
             tempPosition = 0;
         }
     }
+
+    void attack2()
+    {
+        if (tempPosition == 0)
+        {
+            tempPosition = songManager.instance.songPositionInBeats;
+        }
+
+        if (songManager.instance.songPositionInBeats - tempPosition >= (attackFrequency))
+        {
+            createSmartProjectile();
+            tempPosition = 0;
+        }
+    }
+
     public void createProjectile()
+    {
+        var randomPosition = new Vector3(Random.Range(rangeXMin, rangeXMax), Random.Range(rangeYMin, rangeYMax), AttackSpawnPoint.position.z);
+        var attack = Instantiate(AttackPrefab, randomPosition, AttackSpawnPoint.rotation);
+        attack.GetComponent<Rigidbody>().velocity = AttackSpawnPoint.forward * AttackSpeed;
+    }
+    public void createSmartProjectile()
     {
         var attack = Instantiate(AttackPrefab, AttackSpawnPoint.position, AttackSpawnPoint.rotation);
         Vector3 playerPosition = GameObject.FindWithTag("Player").transform.position;

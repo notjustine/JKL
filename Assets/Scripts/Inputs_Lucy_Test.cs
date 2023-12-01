@@ -33,8 +33,8 @@ public class Inputs_Lucy_Test : MonoBehaviour
     // data for handling combo system
     [SerializeField] private bool comboMode;
   
-    public KeyCode[] Combo1 = new KeyCode[] { KeyCode.Alpha1, KeyCode.Alpha2, KeyCode.Alpha3 };
-    public KeyCode[] Combo2 = new KeyCode[] { KeyCode.Alpha1, KeyCode.Alpha2, KeyCode.Alpha3 };
+    public KeyCode[] Combo1 = new KeyCode[] { KeyCode.Alpha1, KeyCode.Alpha2};
+    public KeyCode[] Combo2 = new KeyCode[] { KeyCode.Alpha1, KeyCode.Alpha2};
 
     public int Combo1Test = 0;
     public int Combo2Test = 0;
@@ -80,7 +80,7 @@ public class Inputs_Lucy_Test : MonoBehaviour
         onBeat = songManager.instance.isOnBeat;         // grab song beat boolean from song manager
 
         // attack logic
-        if(songManager.instance.gameState == true)
+        if(songManager.instance.gameState == true && songManager.instance.enableAttacks == true)
         {
             // input on beat
             if (onBeat)
@@ -200,7 +200,7 @@ public class Inputs_Lucy_Test : MonoBehaviour
                         }
 
                         // L is pressed
-                        if (Input.GetKeyDown(KeyCode.L))
+                        /*if (Input.GetKeyDown(KeyCode.L))
                         {
                             comboInputs.Add(KeyCode.L);
                             print("L");
@@ -208,7 +208,7 @@ public class Inputs_Lucy_Test : MonoBehaviour
                             comboCheck();
 
                             beatSnapshot = beatCount;
-                        }
+                        }*/
                     } 
                     
                     // if the player doesn't attack consecutively (waits too long)
@@ -225,14 +225,14 @@ public class Inputs_Lucy_Test : MonoBehaviour
                     }
 
                     //If the maximum number of inputs expected is reached (3), check for completed combos
-                    if (comboInputs.Count == 3)
+                    if (comboInputs.Count == 2)
                     {
-                        if (Combo1Test == 3)
+                        if (Combo1Test == 2)
                         {
                             print("Combo 1 Completed Successfully!");
                             combo1();
                         }
-                        else if (Combo2Test == 3)
+                        else if (Combo2Test == 2)
                         {
                             print("Combo 2 Completed Successfully!");
                             combo2();
@@ -256,8 +256,7 @@ public class Inputs_Lucy_Test : MonoBehaviour
             else
             {
                 // J/K/L is pressed
-                if (Input.GetKeyDown(KeyCode.J) || Input.GetKeyDown(KeyCode.K) || Input.GetKeyDown(KeyCode.L))
-                if (Input.GetKeyDown(KeyCode.J) || Input.GetKeyDown(KeyCode.K) || Input.GetKeyDown(KeyCode.L))
+                if (Input.GetKeyDown(KeyCode.J) || Input.GetKeyDown(KeyCode.K))
                 {
                     CancelInvoke();     // cancel any current delay timers
 
