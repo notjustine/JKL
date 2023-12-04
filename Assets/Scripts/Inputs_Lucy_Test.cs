@@ -13,6 +13,8 @@ public class Inputs_Lucy_Test : MonoBehaviour
     public Transform MissedSpawnPoint;
     public Transform ShieldSpawnPoint;
 
+    //public AudioSource verseLucy;
+
     // data for Lucy's attack/miss
     public GameObject AttackPrefab; // basic attack prefab (J)
     public GameObject combo1Prefab; // combo 1 attack prefab
@@ -79,6 +81,13 @@ public class Inputs_Lucy_Test : MonoBehaviour
         beatCount = songManager.instance.beatCount;     // grab song beat count from song manager
         onBeat = songManager.instance.isOnBeat;         // grab song beat boolean from song manager
 
+        // Begins Lucy's verse at the same time as the boss verse.
+        /*if(songManager.instance.currentAttack == songManager.attackType.Phase1)
+        {
+            verseLucy.Play();
+            verseLucy.mute = true;
+        }*/
+
         // attack logic
         if(songManager.instance.gameState == true && songManager.instance.enableAttacks == true)
         {
@@ -91,9 +100,9 @@ public class Inputs_Lucy_Test : MonoBehaviour
                     // J is pressed
                     if (Input.GetKeyDown(KeyCode.J) && attackable == true)
                     {
+                        //verseLucy.mute = false; //Unmutes Lucy's verse sound clip
 
                         createAttack();     // instantiate a player attack
-
                         attackable = false;                     // player cannot attack;
                         Invoke("attackAgain", attackWindow);    // delay set after a successful attack
                                                                 // until player can attack again
@@ -134,6 +143,8 @@ public class Inputs_Lucy_Test : MonoBehaviour
                     }
                     else if (Input.GetKeyDown(KeyCode.J) && attackable == false)
                     {
+                        //verseLucy.mute = true; //Mutes Lucy's verse
+
                         CancelInvoke();     // cancel any current delay timers
 
                         createMissedAttack();   // instantiate "Missed!" message
@@ -145,6 +156,8 @@ public class Inputs_Lucy_Test : MonoBehaviour
                     // K is pressed
                     if (Input.GetKeyDown(KeyCode.K))
                     {
+                        //verseLucy.mute = false; //Unmutes Lucy's verse sound clip
+
                         comboMode = true;   // initiate a combo
                         print("Combo Initiated!");
 
@@ -214,6 +227,8 @@ public class Inputs_Lucy_Test : MonoBehaviour
                     // if the player doesn't attack consecutively (waits too long)
                     else if (beatCount > (beatSnapshot + 2))
                     {
+                        //verseLucy.mute = true; //Mutes Lucy's verse
+
                         print("Combo Failed!");
 
                         comboInputs.Clear();
@@ -258,6 +273,8 @@ public class Inputs_Lucy_Test : MonoBehaviour
                 // J/K/L is pressed
                 if (Input.GetKeyDown(KeyCode.J) || Input.GetKeyDown(KeyCode.K))
                 {
+                    //verseLucy.mute = true; //Mutes Lucy's verse
+
                     CancelInvoke();     // cancel any current delay timers
 
                     createMissedAttack();   // instantiate "Missed!" message

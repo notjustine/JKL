@@ -54,14 +54,12 @@ public class BossAttacks : MonoBehaviour
         {
             if(songManager.instance.currentAttack == songManager.attackType.Phase1)
             {
-                attack1();
-                
-                
+                attack1();                
             }
 
             if (songManager.instance.currentAttack == songManager.attackType.Phase2)
             {
-                attack2();
+                attack1();
             }
 
             if (songManager.instance.currentAttack == songManager.attackType.Phase3)

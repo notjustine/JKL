@@ -69,7 +69,8 @@ public class songManager : MonoBehaviour
         Phase1, //Boss starts attacking with projectiles. Player must learn to dodge using WASD.
         Phase2, //Player must learn to attack back using J key
         Phase3, 
-        Phase4
+        Phase4,
+        Phase5
     }
     public attackType currentAttack;
 
@@ -147,7 +148,7 @@ public class songManager : MonoBehaviour
                     }
                     
                     // Phase 1 lasts for 64 beats before switching to the next phase
-                    if (beatCount >= 64)
+                    if (beatCount >= 32)
                     {
                         currentAttack = attackType.Phase2;
                     }
@@ -160,17 +161,32 @@ public class songManager : MonoBehaviour
                     enableAttacks = true;
 
                     // When the boss health falls to 90 health or below, switch to next phase
-                    if (bossHealth.currentHealth <= 90)
+                    if (bossHealth.currentHealth <= 80)
                     {
                         currentAttack = attackType.Phase3;
                     }                  
-
                     break;
 
                 case attackType.Phase3:
-                    print("Charge attack!");
+                    print("You have angered the boss!");
+
+                    if (bossHealth.currentHealth <= 40)
+                    {
+                        currentAttack = attackType.Phase4;
+                    }
                     break;
+
                 case attackType.Phase4:
+                    print("Boss is charging!");
+
+                    if (bossHealth.currentHealth <= 0)
+                    {
+                        currentAttack = attackType.Phase5;
+                    }
+                    break;
+
+                case attackType.Phase5:
+                    print("Boss has been defeated");
                     break;
             }
 
