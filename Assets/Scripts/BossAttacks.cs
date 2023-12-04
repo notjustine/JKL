@@ -8,15 +8,6 @@ public class BossAttacks : MonoBehaviour
     public Transform AttackSpawnPoint;
     public GameObject AttackPrefab;
 
-    // these are variables to create a boss pattern manager
-    public enum attackType
-    {
-        Neutral,
-        Projectile,
-        Homing,
-        Charge        
-    }
-    public attackType currentAttack;
     
     // these are variables for the boss projectiles
     public float AttackSpeed = 10;
@@ -32,13 +23,10 @@ public class BossAttacks : MonoBehaviour
     private bool randomized = false;
     [SerializeField] private float chargeSpeed = 0.5f;
 
+    [SerializeField] private bool hasCharged = false;
+
     // used for timing attacks to beats. So far this is being used for the projectile and charge attacks.
     private double tempPosition;
-
-    private void Awake()
-    {
-        currentAttack = attackType.Neutral;
-    }
 
     void Start()
     {
@@ -54,36 +42,56 @@ public class BossAttacks : MonoBehaviour
         {
             if(songManager.instance.currentAttack == songManager.attackType.Phase1)
             {
-                attack1();                
+                attack3(3);
             }
 
             if (songManager.instance.currentAttack == songManager.attackType.Phase2)
             {
-                attack1();
+                attack1(0.7f);
             }
 
             if (songManager.instance.currentAttack == songManager.attackType.Phase3)
             {
                 attack2();
             }
+
+            if (songManager.instance.currentAttack == songManager.attackType.Phase4)
+            {
+                attack3(3);
+            }
+
         }
     }
-    
-    void attack1()
+
+    private void chargeTimer(float chargeInterval)
+    {
+        hasCharged = true;
+        StartCoroutine(chargeAttack()); 
+        Invoke("chargeReset", chargeInterval);
+        
+    }
+     
+    private void chargeReset()
+    {
+        hasCharged = false;
+    }
+
+
+    private void attack1(float frequency) //the lower the number, the more frequent the attacks. Yes it's confusing, too lazy to change it. 
     {
         if (tempPosition == 0)
         {
             tempPosition = songManager.instance.songPositionInBeats;
         }
 
-        if (songManager.instance.songPositionInBeats - tempPosition >= attackFrequency)
+        if (songManager.instance.songPositionInBeats - tempPosition >= frequency)
         {
             createProjectile();
             tempPosition = 0;
         }
     }
 
-    void attack2()
+    private void attack2()
     {
         if (tempPosition == 0)
         {
@@ -94,6 +102,14 @@ public class BossAttacks : MonoBehaviour
         {
             createSmartProjectile();
             tempPosition = 0;
+        }
+    }
+
+    private void attack3(float chargeInterval)
+    {
+        if (hasCharged == false)
+        {
+            chargeTimer(chargeInterval);
         }
     }
 
@@ -143,7 +159,7 @@ public class BossAttacks : MonoBehaviour
         {
             newPosition.z = newPosition.z - chargeSpeed;
             transform.position = newPosition;
-
+            
             yield return null;
         }
 
@@ -151,7 +167,6 @@ public class BossAttacks : MonoBehaviour
         transform.position = savedPosition;
         transform.rotation = savedRotation;
         randomized = false;
-
         //End coroutine
         yield break;
     }

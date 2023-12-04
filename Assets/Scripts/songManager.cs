@@ -138,7 +138,7 @@ public class songManager : MonoBehaviour
                     break;
 
                 case attackType.Phase1: //Boss begins to shoot projectiles. Players must dodge. 
-                    print("The enemy is attacking");
+                    //print("The enemy is attacking");
 
                     //Play the Verse Music
                     if(songStart == false)//songStart is used to make sure the song clip is only started once
