@@ -28,7 +28,7 @@ public class BossHealth : MonoBehaviour
         // boss runs out of health and dies
         if (currentHealth <= 0){
             Destroy(gameObject); // temporary result
-            songManager.instance.pauseGame();
+            //songManager.instance.pauseGame();
         }
     }
     

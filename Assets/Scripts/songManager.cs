@@ -10,6 +10,7 @@ public class songManager : MonoBehaviour
     public AudioSource Verse;
 
     public BossHealth bossHealth;
+    public PlayerHealth playerHealth;
 
     [SerializeField]
     private double songBpm;
@@ -33,6 +34,8 @@ public class songManager : MonoBehaviour
     // records the amount of time paused in dsp time so it can be adjusted after it is unpaused
     private double pauseTime;
 
+    // used to control the order of texts in the combo teaching phase
+    private int textCount = 0;
 
     // the offset to the first beat of the song in seconds
     [SerializeField]
@@ -61,6 +64,7 @@ public class songManager : MonoBehaviour
     public TMP_Text spaceToStart;
 
     [SerializeField] public GameObject pauseCanvas;
+    public TMP_Text bossText;
 
     // these are variables to create a boss pattern manager
     public enum attackType
@@ -70,7 +74,8 @@ public class songManager : MonoBehaviour
         Phase2, //Player must learn to attack back using J key
         Phase3, 
         Phase4,
-        Phase5
+        Phase5,
+        Phase6
     }
     public attackType currentAttack;
 
@@ -106,7 +111,12 @@ public class songManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             gameState = true;
-            Destroy(spaceToStart);
+            spaceToStart.SetText(string.Empty);
+        }
+
+        if(playerHealth.currentHealth <= 0)
+        {
+            endGame();
         }
 
         //If game is started
@@ -118,8 +128,7 @@ public class songManager : MonoBehaviour
                 default:
 
                 case attackType.Phase0: //intro song plays. No boss attacks. No player attacks. Players can move.
-                    print("An enemy appears!");
-
+                    bossText.SetText("A  monstrous  bus  appears");
                     //Play the Intro Music
                     if (songStart == false) //songStart is used to make sure the song clip is only started once
                     {
@@ -138,10 +147,10 @@ public class songManager : MonoBehaviour
                     break;
 
                 case attackType.Phase1: //Boss begins to shoot projectiles. Players must dodge. 
-                    //print("The enemy is attacking");
+                    bossText.SetText("It's  attacking!");
 
                     //Play the Verse Music
-                    if(songStart == false)//songStart is used to make sure the song clip is only started once
+                    if (songStart == false)//songStart is used to make sure the song clip is only started once
                     {
                         Verse.Play();
                         songStart = true;
@@ -155,38 +164,62 @@ public class songManager : MonoBehaviour
                     break;
 
                 case attackType.Phase2: //Players learn to attack back.
-                    print("Time to fight back!");
 
+                    bossText.SetText("Press  J  to  Fight  Back");
+        
                     //Allows the players to use J and K
                     enableAttacks = true;
 
                     // When the boss health falls to 90 health or below, switch to next phase
-                    if (bossHealth.currentHealth <= 80)
+                    if (bossHealth.currentHealth <= 90)
                     {
                         currentAttack = attackType.Phase3;
                     }                  
                     break;
 
                 case attackType.Phase3:
-                    print("You have angered the boss!");
 
-                    if (bossHealth.currentHealth <= 40)
+                    if(textCount == 0)
+                    {
+                        bossText.SetText("Press  K  to  start a combo");
+                    }else if(textCount == 1)
+                    {
+                        bossText.SetText("Follow  up  with  J  and  J  for  a  heavy attack");
+                    }
+
+                    if (Input.GetKey(KeyCode.K))
+                    {
+                        textCount = 1;
+                    }
+                    
+                    if (bossHealth.currentHealth <= 75)
                     {
                         currentAttack = attackType.Phase4;
                     }
                     break;
 
                 case attackType.Phase4:
-                    print("Boss is charging!");
 
-                    if (bossHealth.currentHealth <= 0)
+                    bossText.SetText("Press  KKJ  for  a  shield");
+                    if (bossHealth.currentHealth <= 20)
                     {
                         currentAttack = attackType.Phase5;
                     }
                     break;
 
                 case attackType.Phase5:
-                    print("Boss has been defeated");
+                    bossText.SetText("The  bus  is  getting  low");
+
+                    if(bossHealth.currentHealth <= 0)
+                    {
+                        currentAttack = attackType.Phase6;
+                    }
+                    break;
+
+                case attackType.Phase6:
+
+                    bossText.SetText("The  bus  has  been  defeated!");
+                    Verse.Stop();
                     break;
             }
 
@@ -230,12 +263,13 @@ public class songManager : MonoBehaviour
         }
     }
 
+
     public void pauseGame()
     {
         if(gameState == true)
         {
             gameState = false;
-            //song.Pause();
+            Verse.Pause();
             Time.timeScale = 0;
             pauseTime = (float) AudioSettings.dspTime; // records the exact time the game paused
             //(Roann / UI Pause) Shows up the Pause canvas UI
@@ -244,12 +278,23 @@ public class songManager : MonoBehaviour
         else
         {
             gameState = true;
-            //song.UnPause();
+            Verse.UnPause();
             Time.timeScale = 1;
             double tempTime = (double)AudioSettings.dspTime - pauseTime; // saves the amount of time the game was paused for
             dspSongTime += tempTime; // adjusts the dspSongTime variable with the time the game was paused for so the beat count does not jump ahead to where dspTime currently is
             //(Roann / UI Pause) Hides up the Pause canvas UI
             pauseCanvas.GetComponent<Canvas>().enabled = false;
+        }
+    }
+
+    public void endGame()
+    {
+        if(gameState == true)
+        {
+            gameState = false;
+            Verse.Stop();
+            Time.timeScale = 0;
+            spaceToStart.SetText("You have been defeated!");
         }
     }
    

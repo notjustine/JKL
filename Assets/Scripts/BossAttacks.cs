@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class BossAttacks : MonoBehaviour
 {
-    public songManager songManager;
     public Transform AttackSpawnPoint;
     public GameObject AttackPrefab;
 
@@ -47,18 +46,24 @@ public class BossAttacks : MonoBehaviour
 
             if (songManager.instance.currentAttack == songManager.attackType.Phase2)
             {
-                attack1(0.7f);
+                attack1(1.3f);
             }
 
             if (songManager.instance.currentAttack == songManager.attackType.Phase3)
             {
-                attack2();
+                attack1(0.6f);
             }
 
             if (songManager.instance.currentAttack == songManager.attackType.Phase4)
             {
-                attack3(3);
+                attack2(1f);
             }
+
+            if (songManager.instance.currentAttack == songManager.attackType.Phase5)
+            {
+                attack2(0.5f);
+            }
+
 
         }
     }
@@ -91,14 +96,14 @@ public class BossAttacks : MonoBehaviour
         }
     }
 
-    private void attack2()
+    private void attack2(float frequency) 
     {
         if (tempPosition == 0)
         {
             tempPosition = songManager.instance.songPositionInBeats;
         }
 
-        if (songManager.instance.songPositionInBeats - tempPosition >= (attackFrequency))
+        if (songManager.instance.songPositionInBeats - tempPosition >= frequency)
         {
             createSmartProjectile();
             tempPosition = 0;
@@ -119,6 +124,7 @@ public class BossAttacks : MonoBehaviour
         var attack = Instantiate(AttackPrefab, randomPosition, AttackSpawnPoint.rotation);
         attack.GetComponent<Rigidbody>().velocity = AttackSpawnPoint.forward * AttackSpeed;
     }
+
     public void createSmartProjectile()
     {
         var attack = Instantiate(AttackPrefab, AttackSpawnPoint.position, AttackSpawnPoint.rotation);

@@ -60,7 +60,7 @@ public class PlayerHealth : MonoBehaviour
             //THIS LINE DOESNT WORK, the animation plays but it I forgot that the game pauses it will still take damages when the object isnt destroyed.
 
             Destroy(gameObject); // temporary result
-            songManager.instance.pauseGame();
+            //songManager.instance.pauseGame();
             
         }
 

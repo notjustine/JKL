@@ -13,6 +13,7 @@ public class attackMovement : MonoBehaviour
     {
         Destroy(gameObject, life);
         targetFacing = GameObject.FindWithTag("Player");
+        transform.LookAt(targetFacing.transform);
     }
 
     //Upon hitting another object, perform a certain command.
@@ -23,6 +24,6 @@ public class attackMovement : MonoBehaviour
         Destroy(gameObject);
     }
     void Update(){
-        transform.LookAt(targetFacing.transform);
+        //transform.LookAt(targetFacing.transform);
     }
 }
