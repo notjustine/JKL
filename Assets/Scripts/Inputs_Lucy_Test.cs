@@ -20,6 +20,10 @@ public class Inputs_Lucy_Test : MonoBehaviour
     public GameObject combo1Prefab; // combo 1 attack prefab
     public GameObject combo2Prefab; // combo 2 shield prefab
     public GameObject MissedPrefab;
+    public GameObject jSuccessPrefab; // (Roann) Reference GO of J Text
+    public GameObject kSuccessPrefab; // (Roann) Reference GO of K Text
+    public GameObject comboFailPrefab; // (Roann) Reference GO of ComboFail Text
+    public GameObject comboStartPrefab; // (Roann) Reference GO of ComboFail Text
     public float AttackSpeed = 10;
 
     // data for handling attack timing
@@ -106,7 +110,7 @@ public class Inputs_Lucy_Test : MonoBehaviour
                         attackable = false;                     // player cannot attack;
                         Invoke("attackAgain", attackWindow);    // delay set after a successful attack
                                                                 // until player can attack again
-
+                        Instantiate(jSuccessPrefab, MissedSpawnPoint.position, MissedSpawnPoint.rotation); //(Roann) Instantiating J Prefab
                         // if (!consecutive) // first attack
                         // {
                         //     consecutive = true;
@@ -160,6 +164,7 @@ public class Inputs_Lucy_Test : MonoBehaviour
 
                         comboMode = true;   // initiate a combo
                         print("Combo Initiated!");
+                        Instantiate(comboStartPrefab, MissedSpawnPoint.position, MissedSpawnPoint.rotation); //(Roann) Create Start Combo Prefab
 
                         beatSnapshot = beatCount;
                         // print ("Snapshot on " + beatSnapshot + " and expect next attack on " + (beatSnapshot + 2));
@@ -195,7 +200,7 @@ public class Inputs_Lucy_Test : MonoBehaviour
                         {   
                             comboInputs.Add(KeyCode.J);
                             print("J");
-
+                            Instantiate(jSuccessPrefab, MissedSpawnPoint.position, MissedSpawnPoint.rotation); //(Roann) Instantiating J Prefab
                             comboCheck();
 
                             beatSnapshot = beatCount;
@@ -205,8 +210,9 @@ public class Inputs_Lucy_Test : MonoBehaviour
                         if (Input.GetKeyDown(KeyCode.K))
                         {
                             comboInputs.Add(KeyCode.K);
+                            Instantiate(kSuccessPrefab, MissedSpawnPoint.position, MissedSpawnPoint.rotation);
                             print("K");
-
+                        
                             comboCheck();
 
                             beatSnapshot = beatCount;
@@ -230,7 +236,10 @@ public class Inputs_Lucy_Test : MonoBehaviour
                         //verseLucy.mute = true; //Mutes Lucy's verse
 
                         print("Combo Failed!");
-
+                        /*******************try putting this in a seperate function outside of update so it only instantiates once*****/
+                        Instantiate(comboFailPrefab, MissedSpawnPoint.position, MissedSpawnPoint.rotation); //(Roann) Combo Fail Prefab
+                        /* ********************************************************************************************************** */
+                        // !!!!!!!!!!!!!!! 
                         comboInputs.Clear();
                         Combo1Test = 0;
                         Combo2Test = 0;
@@ -254,13 +263,15 @@ public class Inputs_Lucy_Test : MonoBehaviour
                         }
                         else
                         {
+                            
                             print("Combo Failed!");
+                            Instantiate(comboFailPrefab, MissedSpawnPoint.position, MissedSpawnPoint.rotation); //(Roann) Combo Fail Prefab
                         }
 
                         comboInputs.Clear();
                         Combo1Test = 0;
                         Combo2Test = 0;
-
+                        
                         //Added invoke command so that if a combo happens to end in 'K', it does not immediately initiate another combo
                         Invoke("comboReset", 1);
                     }
@@ -277,8 +288,8 @@ public class Inputs_Lucy_Test : MonoBehaviour
 
                     CancelInvoke();     // cancel any current delay timers
 
-                    createMissedAttack();   // instantiate "Missed!" message
-
+                    // createMissedAttack();   // instantiate "Missed!" message
+                    Instantiate(MissedPrefab, MissedSpawnPoint.position, MissedSpawnPoint.rotation); //(Roann) Instantiating Combo Fail Prefab
                     Invoke("attackAgain", missedDelay);     // delay set after missed attack
                                                             // until player can attack again
                     
@@ -332,6 +343,7 @@ public class Inputs_Lucy_Test : MonoBehaviour
 
     void comboReset() // used for Invoke function to turn off combo mode
     {
+        
         comboMode = false;
     }
 
